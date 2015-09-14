@@ -1,1 +1,1 @@
-FrancoTorrent is an implementeation for the Bittorent Protocol wrriten in C++.
+FrancoTorrent is an implementeation for the Bittorent Protocol written in C++.
