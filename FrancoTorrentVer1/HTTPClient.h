@@ -46,8 +46,8 @@ private:
 		//same thing. If you want only to watch for a connection from a 
 		//specific IP, specify that //instead.
 
-		std::string announce = bencoding.tree.dictionary.find("announce")->second.text;
-		printf(announce.c_str());
+//		std::string announce = bencoding.tree.dictionary.find("announce")->second.text;
+//		printf(announce.c_str());
 	
 		hostent *h = gethostbyname("tracker.mininova.org");
 

@@ -1,12 +1,114 @@
-﻿Build started 9/14/2015 16:55:34 PM.
+﻿Build started 9/15/2015 15:03:31 PM.
      1>Project "C:\Users\Yoav\ComputerProgramming\C++ Projects\FrancoTorrent\FrancoTorrentVer1\FrancoTorrentVer1\FrancoTorrentVer1.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Yoav\ComputerProgramming\C++ Projects\FrancoTorrent\FrancoTorrentVer1\Debug\FrancoTorrentVer1.exe" /INCREMENTAL /NOLOGO Ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Yoav\ComputerProgramming\C++ Projects\FrancoTorrent\FrancoTorrentVer1\Debug\FrancoTorrentVer1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Yoav\ComputerProgramming\C++ Projects\FrancoTorrent\FrancoTorrentVer1\Debug\FrancoTorrentVer1.lib" /MACHINE:X86 Debug\Bencoding.obj
-         Debug\HTTPRequest.obj
-         Debug\Program.obj
-         FrancoTorrentVer1.vcxproj -> C:\Users\Yoav\ComputerProgramming\C++ Projects\FrancoTorrent\FrancoTorrentVer1\Debug\FrancoTorrentVer1.exe
-     1>Done Building Project "C:\Users\Yoav\ComputerProgramming\C++ Projects\FrancoTorrent\FrancoTorrentVer1\FrancoTorrentVer1\FrancoTorrentVer1.vcxproj" (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Bencoding.cpp Program.cpp
+         Program.cpp
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(12): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(14): error C2061: syntax error : identifier 'Value'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(14): error C2065: 'value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(16): error C2614: 'Pointers' : illegal member initialization: 'value' is not a base or member
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(33): error C2061: syntax error : identifier 'Value'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(42): error C2146: syntax error : missing ';' before identifier 'getValueByKey'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(42): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(43): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(47): warning C4183: 'getValueByKey': missing return type; assumed to be a member function returning 'int'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(49): error C2146: syntax error : missing ';' before identifier 'getValueByIndex'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(50): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(52): warning C4183: 'getValueByIndex': missing return type; assumed to be a member function returning 'int'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(62): error C2065: 'Value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(62): error C2923: 'std::map' : 'Value' is not a valid template type argument for parameter '_Ty'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(31): error C2512: 'std::map' : no appropriate default constructor available
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(35): error C2678: binary '[' : no operator found which takes a left-hand operand of type 'std::map' (or there is no acceptable conversion)
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(224): could be '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](const _Kty &)'
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(172): or       '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](_Kty &&)'
+                 while trying to match the argument list '(std::map, std::string)'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(35): error C2065: 'value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(37): error C2065: 'Value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(37): error C2065: 'valuePtr' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(37): error C2678: binary '[' : no operator found which takes a left-hand operand of type 'std::map' (or there is no acceptable conversion)
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(224): could be '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](const _Kty &)'
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(172): or       '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](_Kty &&)'
+                 while trying to match the argument list '(std::map, std::string)'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(38): error C2065: 'valuePtr' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(44): error C2065: 'Value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(44): error C2146: syntax error : missing ';' before identifier 'v'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(44): error C2065: 'v' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(44): error C2678: binary '[' : no operator found which takes a left-hand operand of type 'std::map' (or there is no acceptable conversion)
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(224): could be '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](const _Kty &)'
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(172): or       '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](_Kty &&)'
+                 while trying to match the argument list '(std::map, std::string)'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(46): error C2065: 'v' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(51): error C2065: 'Value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(51): error C2039: 'value' : is not a member of 'Pointers'
+                 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(7) : see declaration of 'Pointers'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.h(66): error C2558: class 'OrderedMap' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\httpclient.h(13): error C2664: 'bool HTTPClient::connectOnPort(int,Bencoding)' : cannot convert argument 2 from 'Bencoding' to 'Bencoding'
+                 Cannot copy construct class 'Bencoding' due to ambiguous copy constructors or no available copy constructor
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\program.cpp(21): warning C4244: '=' : conversion from 'std::streamoff' to 'size_t', possible loss of data
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\program.cpp(36): error C2664: 'HTTPClient::HTTPClient(const HTTPClient &)' : cannot convert argument 1 from 'Bencoding' to 'Bencoding'
+                 Cannot copy construct class 'Bencoding' due to ambiguous copy constructors or no available copy constructor
+         Bencoding.cpp
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(12): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(14): error C2061: syntax error : identifier 'Value'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(14): error C2065: 'value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(16): error C2614: 'Pointers' : illegal member initialization: 'value' is not a base or member
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(33): error C2061: syntax error : identifier 'Value'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(42): error C2146: syntax error : missing ';' before identifier 'getValueByKey'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(42): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(43): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(47): warning C4183: 'getValueByKey': missing return type; assumed to be a member function returning 'int'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(49): error C2146: syntax error : missing ';' before identifier 'getValueByIndex'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(50): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(52): warning C4183: 'getValueByIndex': missing return type; assumed to be a member function returning 'int'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(62): error C2065: 'Value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(62): error C2923: 'std::map' : 'Value' is not a valid template type argument for parameter '_Ty'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(31): error C2512: 'std::map' : no appropriate default constructor available
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(35): error C2678: binary '[' : no operator found which takes a left-hand operand of type 'std::map' (or there is no acceptable conversion)
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(224): could be '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](const _Kty &)'
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(172): or       '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](_Kty &&)'
+                 while trying to match the argument list '(std::map, std::string)'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(35): error C2065: 'value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(37): error C2065: 'Value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(37): error C2065: 'valuePtr' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(37): error C2678: binary '[' : no operator found which takes a left-hand operand of type 'std::map' (or there is no acceptable conversion)
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(224): could be '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](const _Kty &)'
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(172): or       '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](_Kty &&)'
+                 while trying to match the argument list '(std::map, std::string)'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(38): error C2065: 'valuePtr' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(44): error C2065: 'Value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(44): error C2146: syntax error : missing ';' before identifier 'v'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(44): error C2065: 'v' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(44): error C2678: binary '[' : no operator found which takes a left-hand operand of type 'std::map' (or there is no acceptable conversion)
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(224): could be '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](const _Kty &)'
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(172): or       '_Ty &std::map<_Kty,_Ty,_Pr,_Alloc>::operator [](_Kty &&)'
+                 while trying to match the argument list '(std::map, std::string)'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(46): error C2065: 'v' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(51): error C2065: 'Value' : undeclared identifier
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(51): error C2039: 'value' : is not a member of 'Pointers'
+                 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(7) : see declaration of 'Pointers'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.h(66): error C2558: class 'OrderedMap' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(14): error C2582: 'operator =' function is unavailable in 'Value'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(56): error C2558: struct 'Value' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(58): error C2558: struct 'Value' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(60): error C2558: struct 'Value' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(62): error C2558: struct 'Value' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(82): error C2558: struct 'Value' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(88): error C2558: struct 'Value' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(103): error C2558: struct 'Value' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(108): error C2558: struct 'Value' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(131): error C2558: struct 'Value' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(138): error C2558: struct 'Value' : no copy constructor available or copy constructor is declared 'explicit'
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(146): error C2660: 'OrderedMap::Insert' : function does not take 2 arguments
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(150): error C2440: '<function-style-cast>' : cannot convert from 'OrderedMap' to 'Value'
+                 No constructor could take the source type, or constructor overload resolution was ambiguous
+     1>c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(249): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+     1>Done Building Project "C:\Users\Yoav\ComputerProgramming\C++ Projects\FrancoTorrent\FrancoTorrentVer1\FrancoTorrentVer1\FrancoTorrentVer1.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.31
+Time Elapsed 00:00:00.78

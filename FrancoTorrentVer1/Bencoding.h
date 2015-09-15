@@ -9,6 +9,7 @@
 
 #pragma once
 
+
 #include <string>
 #include <vector>
 #include <map>
@@ -16,9 +17,7 @@
 #include <cassert>
 #include <iostream>
 
-typedef char TByte;
-
-typedef std::vector<TByte> TToken;
+struct Value;
 
 /**
 *	Purpose: Determine the type of variable.
@@ -37,7 +36,8 @@ struct Value {
 	std::string						text;
 	std::vector<Value>				list;
 
-	std::map<std::string, Value>	dictionary;
+	//std::map<std::string, Value>	dictionary;
+	OrderedMap						dictionary;
 
 	Value() :
 		dataType(ValueType::UNINITIALIZED)
@@ -59,11 +59,17 @@ struct Value {
 	{
 	}
 
-	Value(std::map<std::string, Value> input) :
+	Value(OrderedMap input) :
 		dataType(ValueType::DICTIONARY), dictionary(input)
 	{
 	}
 };
+
+
+
+typedef char TByte;
+
+typedef std::vector<TByte> TToken;
 
 class Bencoding {
 
@@ -133,7 +139,7 @@ private:
 
 	Value getValueByKey(std::string key)
 	{
-		return tree.dictionary.find(key)->second;
+		//return tree.dictionary.find(key)->second;
 	}
 
 };

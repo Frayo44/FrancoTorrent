@@ -133,8 +133,8 @@ Value Bencoding::decodeList(std::vector<TToken>& tokens)
 
 Value Bencoding::decodeDict(std::vector<TToken>& tokens)
 {
-	std::map<std::string, Value> dict;
-
+	//std::map<std::string, Value> dict;
+	OrderedMap dict;
 	auto tmpList = decodeList(tokens);
 
 	for (auto i = tmpList.list.begin(); i != tmpList.list.end(); i += 2)
@@ -143,7 +143,8 @@ Value Bencoding::decodeDict(std::vector<TToken>& tokens)
 		if ((*i).dataType != ValueType::STRING)
 			throw "Unexpected file format";
 
-		dict[(*i).text] = *(i + 1);
+		dict.Insert((*i).text, *(i + 1));
+	//	dict[(*i).text] = *(i + 1);
 	}
 
 	return Value(dict);
