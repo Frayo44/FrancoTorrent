@@ -1,12 +1,12 @@
 #pragma once
 
 #include <string>
-#include "Bencoding.h"
+
+struct Value;
 
 struct Pointers
 {
 
-	
 public:
 	std::string * text;
 	Value * value;
@@ -14,51 +14,59 @@ public:
 	Pointers(std::string * text, Value * value)
 		: text(text), value(value)
 	{
-		//this->text = text;
-		//this->value = value;
+		
 	}
-
 
 };
 
 class OrderedMap
 {
 	
-
-
 public:
 
 	OrderedMap(void){}
 
-	void Insert(std::string key, Value value) 
+	void Insert(std::string key, Value * value) 
 	{
 		dictionary[key] = value;
+
+		Value * valuePtr = dictionary[key];
+
+
+		auto find_it = dictionary.find(key);
 		
-		Value * valuePtr = & dictionary[key];
-		Pointers pointers((std::string *) valuePtr - 1, valuePtr);
-		dictPtrs.push_back(pointers);
+			Pointers pointers((std::string *)&find_it->first, valuePtr);
+			dictPtrs.push_back(pointers);
+			// = ;
+		
+
+
+
+		
+		
 	};
 
-	Value getValueByKey(std::string key)
+	Value * getValueByKey(std::string key)
 	{
-		Value v = dictionary[key];
+		Value * v = dictionary[key];
 
 		return v;
 	};
 
-	Value getValueByIndex(int index)
+	Value * getValueByIndex(int index)
 	{
-		return (Value) * (dictPtrs[index].value);
+		return  dictPtrs[index].value;
 	};
 
-	std::string getKeyByIndex(int index)
+	std::string * getKeyByIndex(int index)
 	{
-		return (std::string) * dictPtrs[index].text;
-	}
+		return dictPtrs[index].text;
+	};
 
 	
 
 private:
-	std::map<std::string, Value> dictionary;
+	std::string keyy;
+	std::map<std::string, Value *> dictionary;
 	std::vector<Pointers> dictPtrs;
 };

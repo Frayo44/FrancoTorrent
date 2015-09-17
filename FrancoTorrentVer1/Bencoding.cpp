@@ -19,7 +19,10 @@ Bencoding::Bencoding(const TByte *encoded, int length)
 	{
 		isSuccess = false;
 	}
-	std::cout << "Success?: " << isSuccess << std::endl;
+
+	Value v = * this->tree.dictionary.getValueByIndex(0);
+	std::string  s = *this->tree.dictionary.getKeyByIndex(1);
+	std::cout << "Success?: " << isSuccess << "In index 1: " <<  s <<  std::endl;
 
 	/*for (size_t i = 0; i < tokens.size(); i++)
 	{
@@ -143,7 +146,11 @@ Value Bencoding::decodeDict(std::vector<TToken>& tokens)
 		if ((*i).dataType != ValueType::STRING)
 			throw "Unexpected file format";
 
-		dict.Insert((*i).text, *(i + 1));
+		Value * v1 = new Value;
+
+		*v1 = (Value) *(i + 1);
+
+		dict.Insert((*i).text, v1);
 	//	dict[(*i).text] = *(i + 1);
 	}
 

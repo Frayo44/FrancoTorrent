@@ -17,7 +17,7 @@
 #include <cassert>
 #include <iostream>
 
-struct Value;
+#include "OrderedMap.h"
 
 /**
 *	Purpose: Determine the type of variable.
@@ -137,9 +137,6 @@ private:
 	*/
 	void Tokenize(TByte *encoded, std::vector<TToken>& tokens, int length, int counter);
 
-	Value getValueByKey(std::string key)
-	{
-		//return tree.dictionary.find(key)->second;
-	}
+	
 
 };
