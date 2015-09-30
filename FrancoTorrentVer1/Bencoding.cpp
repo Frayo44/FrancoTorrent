@@ -21,8 +21,8 @@ Bencoding::Bencoding(const TByte *encoded, int length)
 	}
 
 	Value v = * this->tree.dictionary.getValueByIndex(0);
-	std::string  s = *this->tree.dictionary.getKeyByIndex(1);
-	std::cout << "Success?: " << isSuccess << "In index 1: " <<  s <<  std::endl;
+	std::string  s = this->tree.dictionary.getKeyByIndex(4);
+	std::cout << "Success?: " << isSuccess <<  std::endl;
 
 	/*for (size_t i = 0; i < tokens.size(); i++)
 	{
@@ -151,7 +151,7 @@ Value Bencoding::decodeDict(std::vector<TToken>& tokens)
 		*v1 = (Value) *(i + 1);
 
 		dict.Insert((*i).text, v1);
-	//	dict[(*i).text] = *(i + 1);
+     	//dict[(*i).text] = *(i + 1);
 	}
 
 	return Value(dict);

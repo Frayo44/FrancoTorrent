@@ -4,46 +4,30 @@
 
 struct Value;
 
-struct Pointers
-{
-
-public:
-	std::string * text;
-	Value * value;
-
-	Pointers(std::string * text, Value * value)
-		: text(text), value(value)
-	{
-		
-	}
-
-};
 
 class OrderedMap
 {
 	
 public:
 
-	OrderedMap(void){}
+	OrderedMap(void) 
+	{}
 
 	void Insert(std::string key, Value * value) 
 	{
-		dictionary[key] = value;
+		auto val = make_pair(key, value);
+		// insert in map
+		auto pr = dictionary.insert(val);
 
 		Value * valuePtr = dictionary[key];
 
 
 		auto find_it = dictionary.find(key);
 		
-			Pointers pointers((std::string *)&find_it->first, valuePtr);
-			dictPtrs.push_back(pointers);
+	//	Pointers pointers(find_it->first, valuePtr);
+
+		dictPtrs.push_back(val);
 			// = ;
-		
-
-
-
-		
-		
 	};
 
 	Value * getValueByKey(std::string key)
@@ -55,18 +39,23 @@ public:
 
 	Value * getValueByIndex(int index)
 	{
-		return  dictPtrs[index].value;
+		return  dictPtrs[index].second;
 	};
 
-	std::string * getKeyByIndex(int index)
+	std::string  getKeyByIndex(int index)
 	{
-		return dictPtrs[index].text;
+		return dictPtrs[index].first;
 	};
 
 	
 
 private:
-	std::string keyy;
-	std::map<std::string, Value *> dictionary;
-	std::vector<Pointers> dictPtrs;
+
+
+	typedef std::map<std::string, Value *> DictionaryMap;
+	DictionaryMap dictionary;
+
+	typedef std::pair<std::string, Value*> PairType;
+	std::vector<PairType> dictPtrs;
+
 };
