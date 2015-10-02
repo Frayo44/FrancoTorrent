@@ -5,8 +5,6 @@
 	@author Yoav Franco
 	@version 1.0 27/07/15
 */
-
-
 #pragma once
 
 
@@ -35,7 +33,7 @@ struct Value {
 	int								integer;
 	std::string						text;
 	std::vector<Value>				list;
-
+	 
 	//std::map<std::string, Value>	dictionary;
 	OrderedMap						dictionary;
 
@@ -137,6 +135,18 @@ private:
 	*/
 	void Tokenize(TByte *encoded, std::vector<TToken>& tokens, int length, int counter);
 
-	
+	TToken Encode();
 
+	TToken FillContent(Value map);
+
+	TToken EncodeString(Value map);
+
+	TToken EncodeList(Value map);
+
+	TToken EncodeDictionary(Value map);
+
+	TToken EncodeInteger(Value map);
+
+	TToken EncodeKey(std::string text);
+	
 };

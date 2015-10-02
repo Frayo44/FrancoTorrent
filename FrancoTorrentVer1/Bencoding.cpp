@@ -20,9 +20,18 @@ Bencoding::Bencoding(const TByte *encoded, int length)
 		isSuccess = false;
 	}
 
-	Value v = * this->tree.dictionary.getValueByIndex(0);
-	std::string  s = this->tree.dictionary.getKeyByIndex(4);
+	//Value v = * this->tree.dictionary.getValueByIndex(0);
+	//std::string  s = this->tree.dictionary.getKeyByIndex(4);
 	std::cout << "Success?: " << isSuccess <<  std::endl;
+
+	TToken buffer;
+	buffer = Encode();
+
+	//printf((const char *) &buffer);
+
+	std::string str(buffer.begin(), buffer.end());
+
+	std::cout << "Encoded String: " << str;
 
 	/*for (size_t i = 0; i < tokens.size(); i++)
 	{
@@ -178,7 +187,7 @@ void Bencoding::Tokenize(TByte *encoded, std::vector<TToken>& tokens, int length
 
 	// Parse of strings or plain integers
 
-	bool is_integer = false; // and not string length;	TODO replace with enum (also with UNKNWON value)
+	bool is_integer = false; // and not string length;	
 	bool is_negative = false;
 
 	ValueType type = ValueType::UNINITIALIZED;
@@ -283,9 +292,143 @@ void Bencoding::Tokenize(TByte *encoded, std::vector<TToken>& tokens, int length
 
 // Encoding
 
-std::string Encode(std::map<std::string, Value>	dictionary)
+TToken Bencoding::Encode()
 {
-	//if (dictionary.begin()->first.)
+	Value mDict = * tree.dictionary.GetValueByKey("info");
 
-	return "";
+	TToken myContent = FillContent(mDict);
+
+	return myContent;
 }
+
+TToken Bencoding::FillContent(Value v)
+{
+
+	ValueType valueType = v.dataType;
+
+	if (valueType == ValueType::STRING)
+		return EncodeString(v);
+	if (valueType == ValueType::INTEGER)
+		return EncodeInteger(v);
+	if (valueType == ValueType::DICTIONARY)
+		return EncodeDictionary(v);
+	if (valueType == ValueType::LIST)
+		return EncodeList(v);
+
+}
+
+TToken Bencoding::EncodeKey(std::string text)
+{
+
+	TToken content;
+
+	int textLength = text.size();
+
+	char * buff = new char[50];
+	_itoa_s(textLength, buff, 50, 10);
+
+
+	for (int i = 0; *(buff + i) != NULL; i++)
+	{
+		content.push_back(*(buff + i));
+	}
+
+	content.push_back(':');
+
+	for (int i = 0; i < text.size(); i++)
+	{
+		content.push_back(text[i]);
+	} 
+
+	return content;
+}
+
+TToken Bencoding::EncodeString(Value map)
+{
+	TToken content;
+	std::string text = map.text;
+	int textLength = text.size();
+	
+	char * buff = new char[50];
+	_itoa_s(textLength, buff, 50, 10);
+
+
+	for (int i = 0; *(buff + i) != NULL; i++)
+	{
+		content.push_back(*(buff + i));
+	}
+
+	content.push_back(':');
+
+	for (int i = 0; i < textLength; i++)
+	{
+		content.push_back(text[i]);
+	}
+
+	return content;
+
+}
+
+TToken Bencoding::EncodeInteger(Value map)
+{
+	TToken content;
+
+	content.push_back('i');
+
+	int number = map.integer;
+	char * buff = new char[50];
+	_itoa_s(number, buff, 50, 10);
+
+	for (int i = 0; *(buff + i) != NULL; i++)
+	{
+		content.push_back(*(buff + i));
+	}
+
+	content.push_back('e');
+
+	return content;
+
+	//FillContent(content, map);
+}
+
+TToken Bencoding::EncodeList(Value map)
+{
+	TToken content;
+	std::vector<Value> vList = map.list;
+
+	content.push_back('l');
+
+	for (int i = 0; i < vList.size(); i++) 
+	{
+		TToken fConetnt = FillContent(vList.at(i));
+		content.insert(content.end(), fConetnt.begin(), fConetnt.end());
+	}
+
+	content.push_back('e');
+
+	return content;
+}
+
+TToken Bencoding::EncodeDictionary(Value map)
+{
+	TToken content;
+	OrderedMap mDictionary = map.dictionary;
+
+	content.push_back('d');
+
+	for (int i = 0; i < mDictionary.GetSize(); i++)
+	{
+		TToken keyConetnt = EncodeKey(mDictionary.GetKeyByIndex(i));
+		content.insert(content.end(), keyConetnt.begin(), keyConetnt.end());
+
+		TToken valueConetnt = FillContent(*mDictionary.GetValueByIndex(i));
+		content.insert(content.end(), valueConetnt.begin(), valueConetnt.end());
+	}
+
+	content.push_back('e');
+
+	return content;
+}
+
+
+

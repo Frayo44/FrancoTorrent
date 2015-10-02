@@ -23,30 +23,38 @@ public:
 
 
 		auto find_it = dictionary.find(key);
-		
-	//	Pointers pointers(find_it->first, valuePtr);
-
+	
 		dictPtrs.push_back(val);
-			// = ;
 	};
 
-	Value * getValueByKey(std::string key)
+	Value * GetValueByKey(std::string key)
 	{
 		Value * v = dictionary[key];
 
 		return v;
 	};
 
-	Value * getValueByIndex(int index)
+	Value * GetValueByIndex(int index)
 	{
 		return  dictPtrs[index].second;
 	};
 
-	std::string  getKeyByIndex(int index)
+	std::string GetKeyByIndex(int index)
 	{
 		return dictPtrs[index].first;
 	};
 
+	int GetSize()
+	{
+		return dictPtrs.size();
+	};
+
+	void RemoveFromVectorByIndex(int index)
+	{
+		assert(index < 0 || index > GetSize());
+
+		dictPtrs.erase(dictPtrs.begin() + index);
+	}
 	
 
 private:
