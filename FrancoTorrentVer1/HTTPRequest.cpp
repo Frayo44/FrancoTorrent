@@ -83,6 +83,10 @@ void HTTPRequest::RemoveHeader(std::string key) {
 	headers.erase(key);
 }
 
+void HTTPRequest::ClearHeader() {
+	headers.clear();
+}
+
 HTTPMethod HTTPRequest::GetMethod(HTTPMethod httpMethod) {
 	return method;
 }

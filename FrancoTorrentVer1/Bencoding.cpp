@@ -1,6 +1,10 @@
 #include "Bencoding.h"
+#include "sha1.h"
+Bencoding::Bencoding() { }
 
-Bencoding::Bencoding(const TByte *encoded, int length)
+// Decoding
+
+Value Bencoding::Decode(const TByte *encoded, int length)
 {
 	TByte *content = (TByte *)encoded;
 
@@ -22,39 +26,23 @@ Bencoding::Bencoding(const TByte *encoded, int length)
 
 	//Value v = * this->tree.dictionary.getValueByIndex(0);
 	//std::string  s = this->tree.dictionary.getKeyByIndex(4);
-	std::cout << "Success?: " << isSuccess <<  std::endl;
+	std::cout << "Success?: " << isSuccess << std::endl;
 
-	TToken buffer;
-	buffer = Encode();
 
-	//printf((const char *) &buffer);
+	/*unsigned char hash[20];
+	char hexstring[41];
 
-	std::string str(buffer.begin(), buffer.end());
 
-	std::cout << "Encoded String: " << str;
+	sha1::sha11 sha1;
 
-	/*for (size_t i = 0; i < tokens.size(); i++)
-	{
-		for (size_t b = 0; b < tokens.at(i).size(); b++)
-		{
-			std::cout << tokens.at(i).at(b);
-		}
+	sha1.calc("1 1", 3, hash); // 10 is the length of the string
+	sha1.toHexString(hash, hexstring);
 
-		std::cout << std::endl;
-	} */
+	int i = 7; */
 
-	
-
-	// 0. Wireshark lookup for torrents
-	// 1. Socket programmng (socket, connect, send, recv, bind, listen, accept)
-	// 2. HTTP Protocol (READING)
-	// 3. HTTP Client
-	// 4. BitTorrent protocol
-
-	//std::string url = this->tree.dictionary["announce"].text;
+	return tree;
 }
 
-// Decoding
 
 Value Bencoding::FillTree(std::vector<TToken>& tokens)
 {

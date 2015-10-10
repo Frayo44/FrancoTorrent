@@ -18,17 +18,17 @@ public:
 
 	void PushChars(std::vector<char>& buffer, const char * text);
 
-
 	void SetMethod(HTTPMethod httpMethod);
 
 	void SetUri(std::string uri);
 	
 	void SetHeader(std::string key, std::string value);
 	
-
 	void RemoveHeader(std::string key);
 
 	HTTPMethod GetMethod(HTTPMethod httpMethod);
+
+	void ClearHeader();
 
 	void SetBody(char * body);
 

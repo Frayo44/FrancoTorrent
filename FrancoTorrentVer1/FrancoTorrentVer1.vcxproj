@@ -67,20 +67,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Bencoding.h" />
+    <ClInclude Include="File.h" />
     <ClInclude Include="HTTPClient.h" />
     <ClInclude Include="HTTPRequest.h" />
     <ClInclude Include="HTTPTracker.h" />
     <ClInclude Include="OrderedMap.h" />
+    <ClInclude Include="sha1.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\sha1.cpp" />
     <ClCompile Include="Bencoding.cpp" />
+    <ClCompile Include="File.cpp" />
     <ClCompile Include="HTTPRequest.cpp" />
+    <ClCompile Include="OrderedMap.cpp" />
     <ClCompile Include="Program.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CrushTheProgram.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\Downloads\torrenttry1.torrent" />
     <None Include="MyTorrent.torrent" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

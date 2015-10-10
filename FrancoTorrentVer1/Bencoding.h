@@ -75,12 +75,11 @@ public:
 	/** Tree used for storing the torrent file */
 	Value tree;
 
-	/** Constructor
-	*
-	* @param encoded a pointer to the content of the file.
-	* @param length the length od the file in bytes.
-	*/
-	Bencoding(const TByte *encoded, int length);
+	/** Constructor */
+	Bencoding();
+
+	TToken Encode();
+	Value Decode(const TByte *encoded, int length);
 
 private:
 
@@ -134,8 +133,6 @@ private:
 	* @param counter a counter.
 	*/
 	void Tokenize(TByte *encoded, std::vector<TToken>& tokens, int length, int counter);
-
-	TToken Encode();
 
 	TToken FillContent(Value map);
 
