@@ -30,13 +30,32 @@ bool HTTPRequest::GetBuffer(std::vector<char>& buffer)
 
 	PushChars(buffer, " ");
 
-	PushChars(buffer, uri.c_str());
+	int counter = 0;
+	for (int i = 0; i < uris.GetSize(); i++) {
+
+		if (counter == 0)
+		{
+			PushChars(buffer, "/announce?");
+		}
+		else
+		{
+			PushChars(buffer, "&");
+		}
+
+		PushChars(buffer, uris.GetKeyByIndex(i).c_str());
+
+		PushChars(buffer, "=");
+
+		PushChars(buffer,  (uris.GetValueByIndex(i)).c_str());
+
+		counter++;
+	}
 
 	PushChars(buffer, " ");
 
 	PushChars(buffer, "HTTP/1.1\r\n");
 
-	typedef std::map<std::string, std::string>::iterator it_type;
+	/*typedef std::map<std::string, std::string>::iterator it_type;
 	for (it_type iterator = headers.begin(); iterator != headers.end(); iterator++) {
 
 
@@ -47,11 +66,21 @@ bool HTTPRequest::GetBuffer(std::vector<char>& buffer)
 		PushChars(buffer, iterator->second.c_str());
 
 		PushChars(buffer, "\r\n");
+	} */
 
+	for (int i = 0; i < headers.GetSize(); i++)
+	{
+		PushChars(buffer, headers.GetKeyByIndex(i).c_str());// iterator->first.c_str());
 
+		PushChars(buffer, ": ");
+
+		PushChars(buffer, (headers.GetValueByIndex(i)).c_str());
+
+		PushChars(buffer, "\r\n");
 	}
 
-	PushChars(buffer, body);
+
+	//PushChars(buffer, body);
 
 	PushChars(buffer, "\r\n");
 
@@ -76,15 +105,20 @@ void HTTPRequest::SetUri(std::string uri) {
 }
 
 void HTTPRequest::SetHeader(std::string key, std::string value) {
-	headers[key] = value;
+	headers.Insert(key, value);
+}
+
+void HTTPRequest::SetUri(std::string key, std::string value) {
+	
+	uris.Insert(key, value);
 }
 
 void HTTPRequest::RemoveHeader(std::string key) {
-	headers.erase(key);
+	headers.EraseByKey(key);
 }
 
 void HTTPRequest::ClearHeader() {
-	headers.clear();
+	//headers.clear();
 }
 
 HTTPMethod HTTPRequest::GetMethod(HTTPMethod httpMethod) {

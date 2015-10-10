@@ -53,9 +53,6 @@
     <ClCompile Include="File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OrderedMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CrushTheProgram.txt">

@@ -79,7 +79,6 @@
     <ClCompile Include="Bencoding.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="HTTPRequest.cpp" />
-    <ClCompile Include="OrderedMap.cpp" />
     <ClCompile Include="Program.cpp" />
   </ItemGroup>
   <ItemGroup>

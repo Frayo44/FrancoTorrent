@@ -134,7 +134,7 @@ Value Bencoding::decodeList(std::vector<TToken>& tokens)
 Value Bencoding::decodeDict(std::vector<TToken>& tokens)
 {
 	//std::map<std::string, Value> dict;
-	OrderedMap dict;
+	OrderedMap<Value *> dict;
 	auto tmpList = decodeList(tokens);
 
 	for (auto i = tmpList.list.begin(); i != tmpList.list.end(); i += 2)
@@ -280,9 +280,9 @@ void Bencoding::Tokenize(TByte *encoded, std::vector<TToken>& tokens, int length
 
 // Encoding
 
-TToken Bencoding::Encode()
+TToken Bencoding::Encode(const std::string key)
 {
-	Value mDict = * tree.dictionary.GetValueByKey("info");
+	Value mDict = * tree.dictionary.GetValueByKey(key);
 
 	TToken myContent = FillContent(mDict);
 
@@ -400,7 +400,7 @@ TToken Bencoding::EncodeList(Value map)
 TToken Bencoding::EncodeDictionary(Value map)
 {
 	TToken content;
-	OrderedMap mDictionary = map.dictionary;
+	OrderedMap<Value *> mDictionary = map.dictionary;
 
 	content.push_back('d');
 

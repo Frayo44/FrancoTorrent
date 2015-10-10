@@ -35,7 +35,7 @@ struct Value {
 	std::vector<Value>				list;
 	 
 	//std::map<std::string, Value>	dictionary;
-	OrderedMap						dictionary;
+	OrderedMap<Value *>						dictionary;
 
 	Value() :
 		dataType(ValueType::UNINITIALIZED)
@@ -57,7 +57,7 @@ struct Value {
 	{
 	}
 
-	Value(OrderedMap input) :
+	Value(OrderedMap<Value *> input) :
 		dataType(ValueType::DICTIONARY), dictionary(input)
 	{
 	}
@@ -78,7 +78,7 @@ public:
 	/** Constructor */
 	Bencoding();
 
-	TToken Encode();
+	TToken Encode(const std::string key);
 	Value Decode(const TByte *encoded, int length);
 
 private:
