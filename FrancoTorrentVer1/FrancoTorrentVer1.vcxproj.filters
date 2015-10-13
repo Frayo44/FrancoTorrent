@@ -36,6 +36,9 @@
     <ClInclude Include="sha1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Program.cpp">
@@ -53,14 +56,17 @@
     <ClCompile Include="File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="CrushTheProgram.txt">
+    <ClCompile Include="HTTPTracker.cpp">
       <Filter>Source Files</Filter>
-    </Text>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MyTorrent.torrent" />
     <None Include="..\..\..\..\..\Downloads\torrenttry1.torrent" />
+    <None Include="..\..\..\..\..\Downloads\cooties.torrent" />
+    <None Include="..\..\..\..\..\Downloads\gametorrent.torrent" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CrushTheProgram.txt" />
   </ItemGroup>
 </Project>

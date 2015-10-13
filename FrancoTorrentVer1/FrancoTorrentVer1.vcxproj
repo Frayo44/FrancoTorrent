@@ -73,18 +73,22 @@
     <ClInclude Include="HTTPTracker.h" />
     <ClInclude Include="OrderedMap.h" />
     <ClInclude Include="sha1.h" />
+    <ClInclude Include="Socket.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\sha1.cpp" />
     <ClCompile Include="Bencoding.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="HTTPRequest.cpp" />
+    <ClCompile Include="HTTPTracker.cpp" />
     <ClCompile Include="Program.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CrushTheProgram.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\Downloads\cooties.torrent" />
+    <None Include="..\..\..\..\..\Downloads\gametorrent.torrent" />
     <None Include="..\..\..\..\..\Downloads\torrenttry1.torrent" />
     <None Include="MyTorrent.torrent" />
   </ItemGroup>

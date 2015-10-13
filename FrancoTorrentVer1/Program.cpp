@@ -3,7 +3,7 @@
 
 void main(void) {
 
-	HTTPTracker tracker("torrenttry1.torrent");
+	HTTPTracker tracker("gametorrent.torrent");
 
 	getchar();
 }
