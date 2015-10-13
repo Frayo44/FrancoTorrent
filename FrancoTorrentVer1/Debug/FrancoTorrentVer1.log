@@ -1,4 +1,6 @@
-﻿  HTTPTracker.cpp
+﻿  Program.cpp
+  HTTPTracker.cpp
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\httptracker.cpp(44): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\httptracker.cpp(87): warning C4101: 'hexstring' : unreferenced local variable
+  Generating Code...
   FrancoTorrentVer1.vcxproj -> C:\Users\Yoav\ComputerProgramming\C++ Projects\FrancoTorrent\FrancoTorrentVer1\Debug\FrancoTorrentVer1.exe

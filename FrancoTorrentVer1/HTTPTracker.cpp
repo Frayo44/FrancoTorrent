@@ -31,7 +31,7 @@ HTTPTracker::HTTPTracker(std::string path)
 	sock.Send(myPacket, str.size());
 
 	char * buffer = new char[200];
-	sock.Recieve(buffer, sizeof(*buffer));
+	sock.Recieve(buffer, 200);
 
 	printf(buffer);
 }

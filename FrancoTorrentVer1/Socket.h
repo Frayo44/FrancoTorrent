@@ -21,7 +21,12 @@ public:
 		}
 
 
-		sock = socket(AF_INET, type, protocol);
+		//sock = socket(AF_INET, type, protocol);
+
+		if ((sock = socket(AF_INET, type, protocol)) == INVALID_SOCKET)
+		{
+			throw "Connect failed (connect())";
+		}
 	}
 
 	void CleanUp()
@@ -46,17 +51,11 @@ public:
 
 		if ((host = gethostbyname(foreignAddress.c_str())) == NULL) 
 		{
-			// strerror() will not work for gethostbyname() and hstrerror() 
-			// is supposedly obsolete
 			throw "Failed to resolve name (gethostbyname())";
 		}
 
 
 		addr.sin_addr.s_addr = *((unsigned long *)host->h_addr_list[0]);
-		if (sock == INVALID_SOCKET)
-		{
-			int i = 5;
-		}
 
 		//int err = connect(sock, (sockaddr *)&addr, sizeof(addr));
 		if (connect(sock, (sockaddr *)&addr, sizeof(addr)) == SOCKET_ERROR)
@@ -77,7 +76,7 @@ public:
 	{
 		int rtn;
 		if ((rtn = recv(sock, (char *) buffer, bufferLen, 0)) < 0) {
-			throw ("Received failed (recv())", true);
+			throw ("Received failed (recv())");
 		}
 
 		return rtn;
