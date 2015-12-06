@@ -134,7 +134,7 @@ Value Bencoding::decodeList(std::vector<TToken>& tokens)
 Value Bencoding::decodeDict(std::vector<TToken>& tokens)
 {
 	//std::map<std::string, Value> dict;
-	OrderedMap<Value *> dict;
+	OrderedMap<std::string, Value *> dict;
 	auto tmpList = decodeList(tokens);
 
 	for (auto i = tmpList.list.begin(); i != tmpList.list.end(); i += 2)
@@ -264,7 +264,10 @@ void Bencoding::Tokenize(TByte *encoded, std::vector<TToken>& tokens, int length
 	}
 	default:
 	{
-		throw "Unexpected format";
+		encoded += 1;
+		counter += 1;
+		
+		Tokenize(encoded, tokens, length, counter);
 		break;
 	}
 	}
@@ -400,7 +403,7 @@ TToken Bencoding::EncodeList(Value map)
 TToken Bencoding::EncodeDictionary(Value map)
 {
 	TToken content;
-	OrderedMap<Value *> mDictionary = map.dictionary;
+	OrderedMap<std::string, Value *> mDictionary = map.dictionary;
 
 	content.push_back('d');
 

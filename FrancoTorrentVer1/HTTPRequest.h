@@ -36,7 +36,7 @@ public:
 private:
 	HTTPMethod method;
 	std::string uri;
-	OrderedMap<std::string>	headers;
-	OrderedMap<std::string>	uris;
+	OrderedMap<std::string, std::string>	headers;
+	OrderedMap<std::string, std::string>	uris;
 	char * body = NULL;
 };

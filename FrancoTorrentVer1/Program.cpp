@@ -3,7 +3,9 @@
 
 void main(void) {
 
-	HTTPTracker tracker("gametorrent.torrent");
+	HTTPTracker tracker("MyTorrent.torrent");
+
+	//std::cout << __cplusplus << std::endl;
 
 	getchar();
 }

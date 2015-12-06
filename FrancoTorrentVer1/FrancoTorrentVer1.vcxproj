@@ -74,6 +74,8 @@
     <ClInclude Include="OrderedMap.h" />
     <ClInclude Include="sha1.h" />
     <ClInclude Include="Socket.h" />
+    <ClInclude Include="TcpPeers.h" />
+    <ClInclude Include="TrackerResponse.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\sha1.cpp" />
@@ -82,6 +84,7 @@
     <ClCompile Include="HTTPRequest.cpp" />
     <ClCompile Include="HTTPTracker.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Socket.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CrushTheProgram.txt" />
@@ -89,8 +92,13 @@
   <ItemGroup>
     <None Include="..\..\..\..\..\Downloads\cooties.torrent" />
     <None Include="..\..\..\..\..\Downloads\gametorrent.torrent" />
+    <None Include="..\..\..\..\..\Downloads\mini1.torrent" />
     <None Include="..\..\..\..\..\Downloads\torrenttry1.torrent" />
+    <None Include="..\..\..\..\..\Downloads\try5.torrent" />
+    <None Include="mini2.torrent" />
     <None Include="MyTorrent.torrent" />
+    <None Include="song.torrent" />
+    <None Include="try3.torrent" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

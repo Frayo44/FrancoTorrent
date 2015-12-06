@@ -35,7 +35,7 @@ struct Value {
 	std::vector<Value>				list;
 	 
 	//std::map<std::string, Value>	dictionary;
-	OrderedMap<Value *>						dictionary;
+	OrderedMap<std::string, Value *>						dictionary;
 
 	Value() :
 		dataType(ValueType::UNINITIALIZED)
@@ -57,7 +57,7 @@ struct Value {
 	{
 	}
 
-	Value(OrderedMap<Value *> input) :
+	Value(OrderedMap<std::string, Value *> input) :
 		dataType(ValueType::DICTIONARY), dictionary(input)
 	{
 	}

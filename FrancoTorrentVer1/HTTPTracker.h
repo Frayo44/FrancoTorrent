@@ -2,11 +2,17 @@
 
 
 #include "HTTPRequest.h"
+#include "TrackerResponse.h"
 #include "File.h"
 #include "sha1.h"
 #include "Bencoding.h"
 #include <string>
 #include "Socket.h"
+
+
+#include <cctype>
+#include <iomanip>
+#include <sstream>
 
 class HTTPTracker
 {
@@ -33,5 +39,5 @@ public:
 	std::string urlencode(const std::string &c);
 
 	char * BuildPacket(); 
-	 
+
 };

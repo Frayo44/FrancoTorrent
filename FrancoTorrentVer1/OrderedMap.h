@@ -8,21 +8,21 @@
 
 //struct Value;
 
-template <class T>
+template <class Z, class T>
 class OrderedMap
 {
 
 private:
 
-	typedef std::map<std::string, T> DictionaryMap;
+	typedef std::map<Z, T> DictionaryMap;
 	DictionaryMap dictionary;
 
-	typedef std::pair<std::string, T> PairType;
+	typedef std::pair<Z, T> PairType;
 	std::vector<PairType> dictPtrs;
 	
 public:
 
-	void Insert(std::string key, T value)
+	void Insert(Z key, T value)
 	{
 		auto val = make_pair(key, value);
 		// insert in map
@@ -37,7 +37,7 @@ public:
 	}
 
 
-	T GetValueByKey(std::string key)
+	T GetValueByKey(Z key)
 	{
 		T v = dictionary[key];
 
@@ -50,7 +50,7 @@ public:
 		return  dictPtrs[index].second;
 	}
 
-	std::string GetKeyByIndex(int index)
+	Z GetKeyByIndex(int index)
 	{
 		return dictPtrs[index].first;
 	}
@@ -66,7 +66,7 @@ public:
 		dictPtrs.clear();
 	}
 
-	void EraseByKey(std::string key)
+	void EraseByKey(Z key)
 	{
 		dictionary.erase(key);
 

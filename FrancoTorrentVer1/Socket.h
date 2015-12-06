@@ -20,9 +20,6 @@ public:
 			throw "Unable to load WinSock DLL";
 		}
 
-
-		//sock = socket(AF_INET, type, protocol);
-
 		if ((sock = socket(AF_INET, type, protocol)) == INVALID_SOCKET)
 		{
 			throw "Connect failed (connect())";
@@ -51,7 +48,7 @@ public:
 
 		if ((host = gethostbyname(foreignAddress.c_str())) == NULL) 
 		{
-			throw "Failed to resolve name (gethostbyname())";
+			throw "Failed t	o resolve name (gethostbyname())";
 		}
 
 
@@ -72,12 +69,14 @@ public:
 		}
 	}
 
-	int Recieve(void *buffer, int bufferLen)
+	int Recieve(char *buffer, int bufferLen)
 	{
 		int rtn;
 		if ((rtn = recv(sock, (char *) buffer, bufferLen, 0)) < 0) {
-			throw ("Received failed (recv())");
+			//throw ("Received failed (recv())");
 		}
+
+		*(buffer + rtn) = '\0';
 
 		return rtn;
 	}

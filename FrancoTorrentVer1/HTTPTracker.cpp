@@ -1,5 +1,6 @@
 #include "HTTPTracker.h"
 
+struct Value;
 
 HTTPTracker::HTTPTracker(std::string path)
 {
@@ -31,9 +32,20 @@ HTTPTracker::HTTPTracker(std::string path)
 	sock.Send(myPacket, str.size());
 
 	char * buffer = new char[200];
-	sock.Recieve(buffer, 200);
+	int recieved = sock.Recieve(buffer, 200);
 
-	printf(buffer);
+	TrackerResponse trackerResponse(buffer, recieved);
+
+	Value v1 = (Value) trackerResponse.GetResponse();
+	
+	std::string s = (*v1.dictionary.GetValueByKey("peers")).text;
+	
+	OrderedMap<std::string, unsigned short> peers = trackerResponse.DecodePeers5((char *)s.c_str());
+	TcpPeers tcpPeers(peers);
+
+	tcpPeers.Connect(peers.GetKeyByIndex(4), (int)peers.GetValueByIndex(4));
+//	OrderedMap<std::string, int> map = trackerResponse.GetPeers();
+
 }
 
 std::string HTTPTracker::GetHost(std::string announceUrl)
