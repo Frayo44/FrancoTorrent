@@ -20,19 +20,12 @@ HTTPTracker::HTTPTracker(std::string path)
 
 	BuildHeaders(host);
 
-	char * myPacket = BuildPacket();
+	httpRequest.Connect(host);
 
-	std::cout << std::endl << "My packet: " << myPacket;
-
-	Socket sock(SOCK_STREAM, IPPROTO_TCP);
-
-	sock.Connect(host, 80);
-
-	std::string str(myPacket);
-	sock.Send(myPacket, str.size());
+	httpRequest.Send();
 
 	char * buffer = new char[200];
-	int recieved = sock.Recieve(buffer, 200);
+	int recieved = httpRequest.Recv(buffer, 200);
 
 	TrackerResponse trackerResponse(buffer, recieved);
 
@@ -42,12 +35,6 @@ HTTPTracker::HTTPTracker(std::string path)
 	
 	OrderedMap<std::string, unsigned short> peers = trackerResponse.DecodePeers5((char *)s.c_str());
 	TcpPeers tcpPeers(peers, GetSha1(bencoder));
-
-//	tcpPeers.Connect(peers.GetKeyByIndex(3), (int)peers.GetValueByIndex(3));
-
-	
-//	OrderedMap<std::string, int> map = trackerResponse.GetPeers();
-
 }
 
 std::string HTTPTracker::GetHost(std::string announceUrl)
@@ -153,25 +140,3 @@ std::string HTTPTracker::urlencode(const std::string &c)
 	}
 	return escaped;
 }
-
-char * HTTPTracker::BuildPacket()
-{
-	std::vector<char> buffer;
-
-	httpRequest.GetBuffer(buffer);
-
-	int length = buffer.size();
-
-	char * ptrContent = new char[length + 1]; // For null termianated
-
-	int i;
-
-	for (i = 0; i < length; i++)
-	{
-		*(ptrContent + i) = buffer.at(i);
-	}
-
-	*(ptrContent + i) = '\0';
-
-	return ptrContent;
-};

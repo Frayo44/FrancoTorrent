@@ -3,6 +3,7 @@
 #include <string>
 #include "OrderedMap.h"
 #include "Socket.h"
+#include "BittorrRequest.h"
 
 class TcpPeers
 {
@@ -13,7 +14,11 @@ private:
 public:
 	TcpPeers(OrderedMap<std::string, unsigned short> peers, std::string infoHash)
 	{
-		size = 0;
+		BittorrRequest bitRequest;
+
+		bitRequest.HandShake(peers.GetKeyByIndex(3), peers.GetValueByIndex(3), infoHash);
+
+		/*size = 0;
 		this->peers = peers;
 		sock = new Socket(SOCK_STREAM, IPPROTO_TCP);
 		Connect(peers.GetKeyByIndex(4), peers.GetValueByIndex(4));
@@ -52,7 +57,7 @@ public:
 		
 		size = i;
 
-		Send((const char *) buffer);
+		Send((const char *) buffer); */
 
 	}
 

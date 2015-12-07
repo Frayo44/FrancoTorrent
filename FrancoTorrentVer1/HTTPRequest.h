@@ -4,12 +4,13 @@
 #include <string>
 #include <vector>
 #include "OrderedMap.h"
+#include "Tcp.h"
  
 enum HTTPMethod {
-	GET, POST, DELETE, PUT, UPDATE, HEAD, OPTIONS
+	GET, POST, PUT, UPDATE, HEAD, OPTIONS
 };
 
-class HTTPRequest // 1.1
+class HTTPRequest : public Tcp // 1.1
 {
 public:
 	bool GetBuffer(std::vector<char>& buffer);
@@ -31,6 +32,33 @@ public:
 	void ClearHeader();
 
 	void SetBody(char * body);
+
+	void Connect(std::string ip)
+	{
+		Tcp::Connect(ip, 80);
+	}
+
+	void Send()
+	{
+		std::vector<char> buffer;
+		GetBuffer(buffer);
+
+		int length = buffer.size();
+
+		char * ptrContent = new char[length + 1]; // For null termianated
+
+		int i;
+
+		for (i = 0; i < length; i++)
+		{
+			*(ptrContent + i) = buffer.at(i);
+		}
+
+		*(ptrContent + i) = '\0';
+
+		std::string myPacket(ptrContent); // for getting size
+		Tcp::Send(ptrContent, myPacket.size());
+	}
 
 
 private:

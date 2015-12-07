@@ -68,6 +68,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Bencoding.h" />
+    <ClInclude Include="BittorrRequest.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="HTTPClient.h" />
     <ClInclude Include="HTTPRequest.h" />
@@ -86,20 +87,10 @@
     <ClCompile Include="HTTPTracker.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="Tcp.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="CrushTheProgram.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\..\Downloads\cooties.torrent" />
-    <None Include="..\..\..\..\..\Downloads\gametorrent.torrent" />
-    <None Include="..\..\..\..\..\Downloads\mini1.torrent" />
-    <None Include="..\..\..\..\..\Downloads\torrenttry1.torrent" />
-    <None Include="..\..\..\..\..\Downloads\try5.torrent" />
-    <None Include="mini2.torrent" />
     <None Include="MyTorrent.torrent" />
-    <None Include="song.torrent" />
-    <None Include="try3.torrent" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

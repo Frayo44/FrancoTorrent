@@ -12,9 +12,6 @@ bool HTTPRequest::GetBuffer(std::vector<char>& buffer)
 	case HTTPMethod::POST:
 		PushChars(buffer, "POST");
 		break;
-	case HTTPMethod::DELETE:
-		PushChars(buffer, "DELETE");
-		break;
 	case HTTPMethod::PUT:
 		PushChars(buffer, "PUT");
 		break;
