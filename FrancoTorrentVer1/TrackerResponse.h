@@ -48,21 +48,17 @@ public:
 		char *buf = buffer;
 
 
-
 		int chunks = strlen(buf) / 6;
-		int offset = 0;
+		int offset = 0; 
 		unsigned char *ip;
 		unsigned short port;
 		int recsDone = 0;
-
-	
 
 
 		while (recsDone < chunks){
 			ip = (unsigned char *) buf + offset;
 
 			port = (unsigned short) (buf[4] << 8) | buf[5];
-
 			//port = (unsigned short) buf + offset + 4;
 			peers.Insert(inet_ntoa(*(in_addr*)ip), (port));
 			printf("\n\n%s - %d\n", inet_ntoa(*(in_addr*)ip), (port));

@@ -41,9 +41,11 @@ HTTPTracker::HTTPTracker(std::string path)
 	std::string s = (*v1.dictionary.GetValueByKey("peers")).text;
 	
 	OrderedMap<std::string, unsigned short> peers = trackerResponse.DecodePeers5((char *)s.c_str());
-	TcpPeers tcpPeers(peers);
+	TcpPeers tcpPeers(peers, GetSha1(bencoder));
 
-	tcpPeers.Connect(peers.GetKeyByIndex(4), (int)peers.GetValueByIndex(4));
+//	tcpPeers.Connect(peers.GetKeyByIndex(3), (int)peers.GetValueByIndex(3));
+
+	
 //	OrderedMap<std::string, int> map = trackerResponse.GetPeers();
 
 }
@@ -72,7 +74,7 @@ std::string HTTPTracker::GetHost(std::string announceUrl)
 
 void HTTPTracker::BuildURI(Bencoding &bencoder)
 {
-	httpRequest.SetUri("info_hash", GetSha1(bencoder));
+	httpRequest.SetUri("info_hash", urlencode(GetSha1(bencoder)));
 	httpRequest.SetUri("peer_id", "ABCDEFGHIJKLMNOPQRST");
 	//httpRequest.SetUri("ip", "255.255.255.255");
 	httpRequest.SetUri("port", "6883");
@@ -105,11 +107,11 @@ std::string HTTPTracker::GetSha1(Bencoding &bencoder)
 	sha1.calc((const char *)str.c_str(), encoded.size(), hash); // 10 is the length of the string
 
 	std::string hashedString(hash, hash + sizeof(hash));
-	std::string str1 = urlencode(hashedString);
+	//std::string str1 = urlencode(hashedString);
 
-	std::cout << "str1: Hashed:! " << str1 << std::endl;
+	//std::cout << "str1: Hashed:! " << str1 << std::endl;
 
-	return str1;
+	return hashedString;
 }
 
 std::string HTTPTracker::char2hex(char dec)
