@@ -3,6 +3,7 @@
 File::File(std::string path)
 {
 	//"MyTorrent.torrent"
+	outFile.open(path, std::ios::out | std::ios::in | std::ios::binary | std::ios::ate);
 	inFile.open(path, std::ios::in | std::ios::binary | std::ios::ate);
 	inFile.seekg(0, std::ios::end); // set the pointer to the end
 	size = inFile.tellg(); // get the length of the file
@@ -10,6 +11,13 @@ File::File(std::string path)
 	inFile.seekg(0, std::ios::beg); // set the pointer to the beginning
 
 	oData = new char[size + 1]; //  for the '\0'
+}
+
+void File::WriteToFile(char * toWrite, int fileLength)
+{
+	outFile.write(toWrite, fileLength);
+
+	//outFile << "Writing this to a file.\n";
 }
 
 char * File::GetConetnt()
@@ -27,5 +35,6 @@ int File::GetSize()
 
 void File::Close()
 {
+	outFile.close();
 	delete[] oData;
 }

@@ -16,14 +16,57 @@ public:
 	{
 		BittorrRequest bitRequest;
 
-		bitRequest.HandShake(peers.GetKeyByIndex(3), peers.GetValueByIndex(3), infoHash);
+		bitRequest.HandShake(peers.GetKeyByIndex(0), peers.GetValueByIndex(0), infoHash);
+		char * buffer = new char[1500];
+		bitRequest.Recv(180, buffer);
+
+		char * buffer2 = new char[1500];
+		// BitField
+		bitRequest.Recv(19, buffer2);
+		bitRequest.Interested();
+	//	bitRequest.Recv(buffer, 1500);
+
+
+		//bitRequest.RequestPiece(0, 0, 291);
+		//bitRequest.RecvPiece(291, "music.mp3");
+
+		//TODO: Create a peer class, TcpPeers will handle all peers. 
+		//TODO: Create a BitArray class for BitField packet
+		// TODO: A to-do piece list in TcpPeers class
+		// 4056211 + 291
+
+		// Get the first piece
+
+		int index = 0, dataRecieved = 0, offSet = 0;
+		const int BLOCK_REQUEST_SIZE = 16384;
+
+		while (dataRecieved < 4056211 + 291)
+		{
+			bitRequest.RequestPiece(index, offSet, BLOCK_REQUEST_SIZE);
+			int recieved = bitRequest.RecvPiece(BLOCK_REQUEST_SIZE, "work_torrent.mp3");
+
+			dataRecieved += recieved;
+
+			offSet += BLOCK_REQUEST_SIZE;
+
+			if (offSet % 1048576 < BLOCK_REQUEST_SIZE - 1)
+			{
+				bitRequest.HavePiece(index);
+				offSet = 0;
+				index++;
+			}
+		}
+
+ 		 int i = 0;
+
+		
 
 		/*size = 0;
 		this->peers = peers;
 		sock = new Socket(SOCK_STREAM, IPPROTO_TCP);
 		Connect(peers.GetKeyByIndex(4), peers.GetValueByIndex(4));
 
-		char * buffer = new char[100];
+		char * buffer = new char[100]; 
 
 		*buffer = ((char)19);
 		std::string peerId = infoHash + "ABCDEFGHIJKLMNOPQRST";

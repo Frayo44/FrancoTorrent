@@ -77,5 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MyTorrent.torrent" />
+    <None Include="torr2.torrent" />
+    <None Include="redum.torrent" />
   </ItemGroup>
 </Project>

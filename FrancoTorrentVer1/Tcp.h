@@ -20,6 +20,11 @@ public:
 		socket->Send(buffer, bufferLen);
 	}
 
+	virtual void Disconnect()
+	{
+		socket->DisConnect();
+	}
+
 	virtual int Recv(char * buffer, int bufferLen)
 	{
 		int i = socket->Recieve(buffer, bufferLen);

@@ -64,10 +64,10 @@ void HTTPTracker::BuildURI(Bencoding &bencoder)
 	httpRequest.SetUri("info_hash", urlencode(GetSha1(bencoder)));
 	httpRequest.SetUri("peer_id", "ABCDEFGHIJKLMNOPQRST");
 	//httpRequest.SetUri("ip", "255.255.255.255");
-	httpRequest.SetUri("port", "6883");
+	httpRequest.SetUri("port", "20383");
 	httpRequest.SetUri("uploaded", "0");
 	httpRequest.SetUri("downloaded", "0");
-	httpRequest.SetUri("left", "98765");
+	httpRequest.SetUri("left", "101765749");
 	httpRequest.SetUri("event", "started");
 }
 

@@ -26,6 +26,13 @@ public:
 		}
 	}
 
+	void DisConnect()
+	{
+		shutdown(sock, 1);
+		closesocket(sock);
+		CleanUp();
+	}
+
 	void CleanUp()
 	{
 		if (WSACleanup() != 0)
