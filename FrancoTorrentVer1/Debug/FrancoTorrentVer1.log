@@ -1,6 +1,17 @@
 ﻿  Tcp.h
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\socket.h(73): warning C4101: 'e' : unreferenced local variable
   Socket.cpp
   Program.cpp
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\socket.h(73): warning C4101: 'e' : unreferenced local variable
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(23): warning C4018: '<' : signed/unsigned mismatch
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(37): warning C4018: '<' : signed/unsigned mismatch
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(44): warning C4018: '<' : signed/unsigned mismatch
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(61): warning C4018: '<' : signed/unsigned mismatch
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(80): warning C4018: '<' : signed/unsigned mismatch
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(112): warning C4018: '<' : signed/unsigned mismatch
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bitarray.h(14): warning C4018: '<' : signed/unsigned mismatch
+  Peer.h
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\socket.h(73): warning C4101: 'e' : unreferenced local variable
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(23): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(37): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(44): warning C4018: '<' : signed/unsigned mismatch
@@ -8,15 +19,18 @@ c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\f
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(80): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(112): warning C4018: '<' : signed/unsigned mismatch
   HTTPTracker.cpp
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\socket.h(73): warning C4101: 'e' : unreferenced local variable
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(23): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(37): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(44): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(61): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(80): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bittorrrequest.h(112): warning C4018: '<' : signed/unsigned mismatch
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bitarray.h(14): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\httptracker.cpp(45): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\httptracker.cpp(88): warning C4101: 'hexstring' : unreferenced local variable
   HTTPRequest.cpp
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\socket.h(73): warning C4101: 'e' : unreferenced local variable
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(73): warning C4018: '<' : signed/unsigned mismatch
           c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\orderedmap.h(70) : while compiling class template member function 'void OrderedMap<std::string,std::string>::EraseByKey(Z)'
           with
@@ -31,6 +45,8 @@ c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\f
           c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\httprequest.h(67) : see reference to class template instantiation 'OrderedMap<std::string,std::string>' being compiled
   File.cpp
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\file.cpp(9): warning C4244: '=' : conversion from 'std::streamoff' to 'size_t', possible loss of data
+  BitArray.h
+c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bitarray.h(14): warning C4018: '<' : signed/unsigned mismatch
   Bencoding.cpp
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(253): warning C4018: '<' : signed/unsigned mismatch
 c:\users\yoav\computerprogramming\c++ projects\francotorrent\francotorrentver1\francotorrentver1\bencoding.cpp(329): warning C4018: '<' : signed/unsigned mismatch

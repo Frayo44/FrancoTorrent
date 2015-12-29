@@ -1,7 +1,9 @@
 
 #include "HTTPTracker.h"
-
-void main(void) {
+#include "BitArray.h"
+#include <vector>
+void main(void)
+{
 
 	HTTPTracker tracker("redum.torrent");
 

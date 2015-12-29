@@ -4,6 +4,9 @@
 #include "OrderedMap.h"
 #include "Socket.h"
 #include "BittorrRequest.h"
+#include "Peer.h"
+#include "BitArray.h"
+#include <thread>
 
 class TcpPeers
 {
@@ -11,24 +14,78 @@ private:
 	OrderedMap<std::string, unsigned short> peers;
 	Socket * sock;
 	int size;
+	Peer*	peersArr;
 public:
+	void HandleThreads()
+	{
+		for (int i = 0; i < peers.GetSize(); i++)
+		{
+			std::thread t1(&Peer::CreateConnection, *(peersArr + i));
+			t1.join();
+
+			if ((*(peersArr + i)).IsConnected())
+			{
+				std::thread t2(&Peer::RecievePeace, *(peersArr + i), 0, 1048576);
+				t2.join();
+			}
+		}
+	}
+
 	TcpPeers(OrderedMap<std::string, unsigned short> peers, std::string infoHash)
 	{
-		BittorrRequest bitRequest;
 
+
+		Peer * peer = new Peer(peers.GetKeyByIndex(0), peers.GetValueByIndex(0), infoHash);
+
+		//std::vector<char> testVect;
+		//testVect.push_back('a');
+		//	BitArray biArr(testVect);
+	/*	this->peers = peers;
+		peersArr = new Peer[peers.GetSize()];
+
+		for (int i = 0; i < peers.GetSize(); i++)
+		{
+			Peer * pp = new Peer(peers.GetKeyByIndex(i), peers.GetValueByIndex(i), infoHash);
+			*(peersArr + i) = *pp;
+		}
+
+		//	std::thread t1(&((peersArr)->Peer::CreateConnection), peersArr[0]);
+
+		
+		std::thread first(&TcpPeers::HandleThreads, *this);
+	//	first.join();
+		
+		while (true)
+		{
+			int b = 0;
+		}
+	
+		first.join();
+		*/
+
+		// Makes the main thread wait for the new thread to finish execution, therefore blocks its own execution.
+		//t1.join();
+
+
+		BittorrRequest bitRequest;
+		bitRequest.Connect(peers.GetKeyByIndex(0), peers.GetValueByIndex(0));
 		bitRequest.HandShake(peers.GetKeyByIndex(0), peers.GetValueByIndex(0), infoHash);
 		char * buffer = new char[1500];
 		bitRequest.Recv(180, buffer);
 
 		char * buffer2 = new char[1500];
 		// BitField
-		bitRequest.Recv(19, buffer2);
+		std::vector<char> vect = bitRequest.Recv(19, buffer2);
+
+
+		
+
 		bitRequest.Interested();
-	//	bitRequest.Recv(buffer, 1500);
+		//bitRequest.Recv(buffer, 1500);
 
 
-		//bitRequest.RequestPiece(0, 0, 291);
-		//bitRequest.RecvPiece(291, "music.mp3");
+		bitRequest.RequestPiece(0, 0, 291);
+		bitRequest.RecvPiece(291, "music.mp3");
 
 		//TODO: Create a peer class, TcpPeers will handle all peers. 
 		//TODO: Create a BitArray class for BitField packet
@@ -58,7 +115,7 @@ public:
 		}
 
  		 int i = 0;
-
+		 
 		
 
 		/*size = 0;
@@ -104,14 +161,5 @@ public:
 
 	}
 
-	void Connect(std::string ip, int port)
-	{
-		sock->Connect(ip, port);
-	}
-
-	void Send(const char * packet)
-	{
-
-		sock->Send(packet, size);
-	}
+	
 };

@@ -41,7 +41,7 @@ public:
 		}
 	}
 	
-	void Connect(const std::string &foreignAddress, int foreignPort)
+	bool Connect(const std::string &foreignAddress, int foreignPort)
 	{
 
 		SOCKADDR_IN addr; // The address structure for a TCP socket
@@ -55,17 +55,24 @@ public:
 
 		if ((host = gethostbyname(foreignAddress.c_str())) == NULL) 
 		{
-			throw "Failed t	o resolve name (gethostbyname())";
+			return false;
 		}
 
 
 		addr.sin_addr.s_addr = *((unsigned long *)host->h_addr_list[0]);
 
 		//int err = connect(sock, (sockaddr *)&addr, sizeof(addr));
-		if (connect(sock, (sockaddr *)&addr, sizeof(addr)) == SOCKET_ERROR)
-		{
-			throw "Connect failed (connect())";
+		try { 
+		
+			if (connect(sock, (sockaddr *)&addr, sizeof(addr)) == SOCKET_ERROR)
+			{
+				return false;
+			}
+	
 		}
+		catch (const std::exception& e) { /* */ }
+
+		return true;
 	}
 
 

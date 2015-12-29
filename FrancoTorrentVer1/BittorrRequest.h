@@ -12,7 +12,7 @@ public:
 	void HandShake(std::string ip, int port, std::string infoHash)
 	{
 		std::vector<char> buffer;
-		Tcp::Connect(ip, port);
+		//Tcp::Connect(ip, port);
 
 		std::string protocolStr = "BitTorrent protocol";
 		std::string hashAndID = infoHash + "ABCDEFGHIJKLMNOPQRST";
@@ -125,7 +125,7 @@ public:
 		}
 	}
 
-	int Recv(int requestedLength, char * buffer)
+	std::vector<char> Recv(int requestedLength, char * buffer)
 	{
 		std::vector<char> charVector;
 
@@ -148,7 +148,7 @@ public:
 			}
 		}
 
-		return sumPieces;
+		return charVector;
 	}
 
 	int RecvPiece(int requestedLength, std::string path)

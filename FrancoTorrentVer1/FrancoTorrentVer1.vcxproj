@@ -82,9 +82,11 @@
   <ItemGroup>
     <ClCompile Include="..\..\sha1.cpp" />
     <ClCompile Include="Bencoding.cpp" />
+    <ClCompile Include="BitArray.h" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="HTTPRequest.cpp" />
     <ClCompile Include="HTTPTracker.cpp" />
+    <ClCompile Include="Peer.h" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="Tcp.h" />

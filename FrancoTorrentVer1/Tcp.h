@@ -10,9 +10,9 @@ public:
 		this->socket = new Socket(SOCK_STREAM, IPPROTO_TCP);
 	}
 
-	virtual void Connect(std::string ip, int port)
+	virtual bool Connect(std::string ip, int port)
 	{
-		socket->Connect(ip, port);
+		return socket->Connect(ip, port);
 	}
 
 	virtual void Send(char * buffer, int bufferLen)

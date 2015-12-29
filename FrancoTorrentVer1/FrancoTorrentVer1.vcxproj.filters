@@ -74,6 +74,12 @@
     <ClCompile Include="Tcp.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="BitArray.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Peer.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MyTorrent.torrent" />
