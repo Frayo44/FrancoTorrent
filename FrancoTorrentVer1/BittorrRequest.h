@@ -34,7 +34,7 @@ public:
 		buffer.push_back((char)00);
 		buffer.push_back((char)05);
 
-		for (int i = 0; i < hashAndID.size(); i++)
+		for (std::size_t i = 0; i < hashAndID.size(); i++)
 		{
 			buffer.push_back(hashAndID.at(i));
 		}
@@ -58,7 +58,7 @@ public:
 
 		char * buff = new char[buffer.size()];
 
-		for (int i = 0; i < buffer.size(); i++)
+		for (std::size_t i = 0; i < buffer.size(); i++)
 		{
 			buff[i] = buffer.at(i);
 		}
@@ -77,7 +77,7 @@ public:
 
 		char * buff = new char[buffer.size()];
 
-		for (int i = 0; i < buffer.size(); i++)
+		for (std::size_t i = 0; i < buffer.size(); i++)
 		{
 			buff[i] = buffer.at(i);
 		}
@@ -90,26 +90,16 @@ public:
 		std::vector<char> buffer;
 		int msgLength = 13, msgType = 6;
 
-		for (int i = 0; i < 1; i++)
-		{
-
-			
-
-			PushInteger(msgLength, buffer);
-			buffer.push_back((char)6);
-			PushInteger(index, buffer);
-			PushInteger(begin, buffer);
-			PushInteger(length, buffer);
-
-			begin += 16384;
-
-			if (length == 291)
-				i = 100;
-		}
+		
+		PushInteger(msgLength, buffer);
+		buffer.push_back((char)6);
+		PushInteger(index, buffer);
+		PushInteger(begin, buffer);
+		PushInteger(length, buffer);
 
 		char * buff = new char[buffer.size()];
 
-		for (int i = 0; i < buffer.size(); i++)
+		for (std::size_t i = 0; i < buffer.size(); i++)
 		{
 			buff[i] = buffer.at(i);
 		}
@@ -129,23 +119,11 @@ public:
 	{
 		std::vector<char> charVector;
 
+		int recieved = Tcp::Recv(buffer, requestedLength, requestedLength);
 
-		int sumPieces = 0;
-		while (sumPieces < requestedLength)
+		for (int i = 0; i < recieved; i++)
 		{
-
-			//buffer = new char[1506];
-			int recieved = Tcp::Recv(buffer, requestedLength);
-
-			for (int i = 0; i < recieved; i++)
-			{
-				charVector.push_back(buffer[i]);
-			}
-
-			if (recieved > 0)
-			{
-				sumPieces += recieved;
-			}
+			charVector.push_back(buffer[i]);
 		}
 
 		return charVector;
@@ -155,26 +133,19 @@ public:
 	{
 		
 		File file(path);
-		char * buffer = new char[1506];
+		char * buffer = new char[requestedLength];
 		int counter = 1; 
 		int sumPieces = 0;
-		while (sumPieces < requestedLength)
-		{
-			
+		
 			//buffer = new char[1506];
-			int recieved = Tcp::Recv(buffer, 1506);
-			
-			
+		int recieved = Tcp::Recv(buffer, requestedLength, requestedLength);
 
-			if (recieved > 0)
-			{
-				//sumPieces += recieved;
-				file.WriteToFile(buffer, recieved);
-				sumPieces += recieved;
-				counter++;
-			}
-
-			
+		if (recieved > 0)
+		{
+			//sumPieces += recieved;
+			file.WriteToFile(buffer, recieved);
+			sumPieces += recieved;
+			counter++;
 		}
 
 		//delete[] buffer;

@@ -43,7 +43,7 @@ public:
 	
 	bool Connect(const std::string &foreignAddress, int foreignPort)
 	{
-
+		// TODO: HANDLE CONNECTIONS
 		SOCKADDR_IN addr; // The address structure for a TCP socket
 
 		memset(&addr, 0, sizeof(addr));
@@ -83,16 +83,42 @@ public:
 		}
 	}
 
-	int Recieve(char *buffer, int bufferLen)
+	int Recieve(char *buffer, int bufferLen, int toRecieve)
 	{
-		int rtn;
-		if ((rtn = recv(sock, (char *) buffer, bufferLen, 0)) < 0) {
-			//throw ("Received failed (recv())");
-		}
 
-		*(buffer + rtn) = '\0';
+		int recieved = 0;
+		const int BLOCK_REQUEST_SIZE = 1500;
 
-		return rtn;
+		do
+		{
+			int rtn;
+
+			if (toRecieve - recieved <= BLOCK_REQUEST_SIZE)
+			{
+				rtn = recv(sock, (char *) (buffer + recieved), toRecieve - recieved, 0);
+				recieved += rtn;
+				return recieved;
+			}
+			else 
+			{
+				rtn = recv(sock, (char *)(buffer + recieved), BLOCK_REQUEST_SIZE, 0);
+				recieved += rtn;
+			}
+
+			if (rtn < 0) 
+			{
+				return -1;
+			}
+
+			
+
+		} while (recieved < toRecieve);
+
+		
+
+		//*(buffer + rtn) = '\0';
+
+		return recieved;
 	}
 
 

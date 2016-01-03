@@ -14,8 +14,6 @@ HTTPTracker::HTTPTracker(std::string path)
 
 	std::string announceUrl = (*bencoder.tree.dictionary.GetValueByKey("announce")).text;
 
-	std::string url = announceUrl.substr(0, announceUrl.size() - 9);
-
 	std::string host = GetHost(announceUrl);
 
 	BuildHeaders(host);
@@ -25,7 +23,8 @@ HTTPTracker::HTTPTracker(std::string path)
 	httpRequest.Send();
 
 	char * buffer = new char[200];
-	int recieved = httpRequest.Recv(buffer, 200);
+	int recieved = httpRequest.Recv(buffer, 200, 200);
+	*(buffer + recieved + 1) = '\0';
 
 	TrackerResponse trackerResponse(buffer, recieved);
 

@@ -389,7 +389,7 @@ TToken Bencoding::EncodeList(Value map)
 
 	content.push_back('l');
 
-	for (int i = 0; i < vList.size(); i++) 
+	for (std::size_t i = 0; i < vList.size(); i++) 
 	{
 		TToken fConetnt = FillContent(vList.at(i));
 		content.insert(content.end(), fConetnt.begin(), fConetnt.end());
@@ -407,7 +407,7 @@ TToken Bencoding::EncodeDictionary(Value map)
 
 	content.push_back('d');
 
-	for (int i = 0; i < mDictionary.GetSize(); i++)
+	for (std::size_t i = 0; i < mDictionary.GetSize(); i++)
 	{
 		TToken keyConetnt = EncodeKey(mDictionary.GetKeyByIndex(i));
 		content.insert(content.end(), keyConetnt.begin(), keyConetnt.end());

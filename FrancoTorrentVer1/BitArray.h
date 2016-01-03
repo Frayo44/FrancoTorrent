@@ -11,7 +11,7 @@ public:
 	{
 		
 		// TODO: Replace the vector.. or itertor...
-		for (int i = 0; i < vect.size(); i++)
+		for (std::size_t i = 0; i < vect.size(); i++)
 		{
 			char c = vect.at(i);
 			for (int a = 0; a < 8; a++)

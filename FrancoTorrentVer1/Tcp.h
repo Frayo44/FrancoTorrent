@@ -25,9 +25,9 @@ public:
 		socket->DisConnect();
 	}
 
-	virtual int Recv(char * buffer, int bufferLen)
+	virtual int Recv(char * buffer, int bufferLen, int toRecieve)
 	{
-		int i = socket->Recieve(buffer, bufferLen);
+		int i = socket->Recieve(buffer, bufferLen, toRecieve);
 		return i;
 	}
 

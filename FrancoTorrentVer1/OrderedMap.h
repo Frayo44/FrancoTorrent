@@ -70,7 +70,7 @@ public:
 	{
 		dictionary.erase(key);
 
-		for (int i = 0; i < dictPtrs.size(); i++)
+		for (std::size_t i = 0; i < dictPtrs.size(); i++)
 		{
 			if (dictPtrs.at(i).first == key)
 			{

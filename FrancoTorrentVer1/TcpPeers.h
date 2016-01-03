@@ -16,26 +16,31 @@ private:
 	int size;
 	Peer*	peersArr;
 public:
-	void HandleThreads()
+	void PeerHandeling()
 	{
-		for (int i = 0; i < peers.GetSize(); i++)
-		{
-			std::thread t1(&Peer::CreateConnection, *(peersArr + i));
-			t1.join();
+		// TODO: Crate Class for downloading torrent files and call it from thread, Peer Connetion -> PeerHandeling, Peer Connection Data 
 
-			if ((*(peersArr + i)).IsConnected())
+		for (std::size_t i = 0; i < peers.GetSize(); i++)
+		{
+			//std::thread t(&Peer::CreateConnection, *(peersArr + i));
+			
+		//	t.
+
+			/*if ((*(peersArr + i)).IsConnected())
 			{
 				std::thread t2(&Peer::RecievePeace, *(peersArr + i), 0, 1048576);
 				t2.join();
-			}
+			} */
 		}
+
+//		t1.join();
 	}
 
 	TcpPeers(OrderedMap<std::string, unsigned short> peers, std::string infoHash)
 	{
 
 
-		Peer * peer = new Peer(peers.GetKeyByIndex(0), peers.GetValueByIndex(0), infoHash);
+		Peer * peer = new Peer(peers.GetKeyByIndex(1), peers.GetValueByIndex(1), infoHash);
 
 		//std::vector<char> testVect;
 		//testVect.push_back('a');
@@ -68,12 +73,12 @@ public:
 
 
 		BittorrRequest bitRequest;
-		bitRequest.Connect(peers.GetKeyByIndex(0), peers.GetValueByIndex(0));
-		bitRequest.HandShake(peers.GetKeyByIndex(0), peers.GetValueByIndex(0), infoHash);
-		char * buffer = new char[1500];
+		bitRequest.Connect(peers.GetKeyByIndex(1), peers.GetValueByIndex(1));
+		bitRequest.HandShake(peers.GetKeyByIndex(1), peers.GetValueByIndex(1), infoHash);
+		char * buffer = new char[180];
 		bitRequest.Recv(180, buffer);
 
-		char * buffer2 = new char[1500];
+		char * buffer2 = new char[19];
 		// BitField
 		std::vector<char> vect = bitRequest.Recv(19, buffer2);
 
@@ -84,8 +89,8 @@ public:
 		//bitRequest.Recv(buffer, 1500);
 
 
-		bitRequest.RequestPiece(0, 0, 291);
-		bitRequest.RecvPiece(291, "music.mp3");
+	//	bitRequest.RequestPiece(0, 0, 291);
+	//	bitRequest.RecvPiece(291, "music.mp3");
 
 		//TODO: Create a peer class, TcpPeers will handle all peers. 
 		//TODO: Create a BitArray class for BitField packet

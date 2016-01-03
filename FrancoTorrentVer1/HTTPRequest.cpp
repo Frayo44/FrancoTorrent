@@ -28,7 +28,7 @@ bool HTTPRequest::GetBuffer(std::vector<char>& buffer)
 	PushChars(buffer, " ");
 
 	int counter = 0;
-	for (int i = 0; i < uris.GetSize(); i++) {
+	for (std::size_t i = 0; i < uris.GetSize(); i++) {
 
 		if (counter == 0)
 		{

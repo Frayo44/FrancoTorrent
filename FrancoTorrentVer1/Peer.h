@@ -30,8 +30,6 @@ public:
 		return isConnected;
 	}
 
-
-
 	void CreateConnection()
 	{
 		if (!bitRequest->Connect(ip, port)) 
