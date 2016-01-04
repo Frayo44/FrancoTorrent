@@ -5,22 +5,28 @@
 class BitArray
 {
 private:
-	std::vector<unsigned char> bitfield;
+	
 public:
-	BitArray(std::vector<char> vect)
+	BitArray()
 	{
 		
-		// TODO: Replace the vector.. or itertor...
-		for (std::size_t i = 0; i < vect.size(); i++)
+	}
+
+	std::vector<unsigned char> getBitsArrFromBuffer(char * buffer, int len)
+	{
+		std::vector<unsigned char> bitfield;
+
+		for (std::size_t i = 0; i < len; i++)
 		{
-			char c = vect.at(i);
+			char c = *(buffer + i);
 			for (int a = 0; a < 8; a++)
 			{
-				
+				/* Shift right */
 				bitfield.push_back((c >> a) & 1);
 			}
-			
 		}
+
+		return bitfield;
 	}
 
 

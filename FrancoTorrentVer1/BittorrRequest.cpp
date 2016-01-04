@@ -106,20 +106,6 @@ void BittorrRequest::PushInteger(int integer, std::vector<char> & buffer)
 	}
 }
 
-std::vector<char> BittorrRequest::Recv(int requestedLength, char * buffer)
-{
-	std::vector<char> charVector;
-
-	int recieved = Tcp::Recv(buffer, requestedLength, requestedLength);
-
-	for (int i = 0; i < recieved; i++)
-	{
-		charVector.push_back(buffer[i]);
-	}
-
-	return charVector;
-}
-
 int BittorrRequest::RecvPiece(int requestedLength, std::string path)
 {
 

@@ -2,7 +2,7 @@
 
 #include <string>
 #include "BittorrRequest.h"
-
+#include "BitArray.h"
 
 
 class Peer
@@ -12,6 +12,7 @@ private:
 	int port;
 	BittorrRequest * bitRequest;
 	bool isConnected;
+	std::vector<unsigned char> bitfield;
 public:
 
 	Peer(){};
@@ -36,16 +37,36 @@ public:
 			return;
 
 		bitRequest->HandShake(ip, port, infoHash);
-		char * buffer = new char[1500];
+		char * buffer = new char[182];
 		// Handshake (Extended)
-		bitRequest->Recv(180, buffer);
+		int recieved = bitRequest->Recv(buffer, 182, 182);
+
+		if (recieved > 0 && buffer[0] == '\x13')
+		{
+			// Handshake recieved
+		}
+
+		//  TODO: Now it's just fixed sizes by number that have been seen in WireShark
 		char * buffer2 = new char[1500];
 		// BitField
-		bitRequest->Recv(19, buffer2);
+		int recieved2 = bitRequest->Recv(buffer2, 1500, 1500);
+		byte bufferg = (char)buffer2[4];
+		if (recieved2 > 0 && bufferg == '\x5')
+		{
+			BitArray bitArray;
+			bitfield = bitArray.getBitsArrFromBuffer(buffer2 + 5, recieved2);
+			// It's BitField!
+		}
+
 		bitRequest->Interested();
 
 		isConnected = true;
 		//return true;
+	}
+
+	bool HasPeace(int pieceIndex)
+	{
+		return bitfield.at(pieceIndex) == '\x1';
 	}
 
 	bool RecievePeace(int pieceIndex, int pieceLength)

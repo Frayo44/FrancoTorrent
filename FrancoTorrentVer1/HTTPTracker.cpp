@@ -24,7 +24,7 @@ HTTPTracker::HTTPTracker(std::string path)
 
 	char * buffer = new char[200];
 	int recieved = httpRequest.Recv(buffer, 200, 200);
-	*(buffer + recieved + 1) = '\0';
+	*(buffer + recieved) = '\0';
 
 	TrackerResponse trackerResponse(buffer, recieved);
 
@@ -33,7 +33,7 @@ HTTPTracker::HTTPTracker(std::string path)
 	std::string s = (*v1.dictionary.GetValueByKey("peers")).text;
 	
 	OrderedMap<std::string, unsigned short> peers = trackerResponse.DecodePeers((char *)s.c_str());
-	TcpPeers tcpPeers(peers, GetSha1(bencoder));
+	TcpPeers tcpPeers(peers, GetSha1(bencoder), bencoder);
 }
 
 std::string HTTPTracker::GetHost(std::string announceUrl)

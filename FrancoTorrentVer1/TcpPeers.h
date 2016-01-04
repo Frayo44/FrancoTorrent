@@ -6,6 +6,7 @@
 #include "BittorrRequest.h"
 #include "Peer.h"
 #include "BitArray.h"
+#include "Bencoding.h"
 #include <thread>
 
 class TcpPeers
@@ -36,12 +37,13 @@ public:
 		//		t1.join();
 	}
 
-	TcpPeers(OrderedMap<std::string, unsigned short> peers, std::string infoHash)
+	TcpPeers(OrderedMap<std::string, unsigned short> peers, std::string infoHash, Bencoding bencoder)
 	{
 
 
-		Peer * peer = new Peer(peers.GetKeyByIndex(1), peers.GetValueByIndex(1), infoHash);
-
+		Peer peer(peers.GetKeyByIndex(1), peers.GetValueByIndex(1), infoHash);
+		peer.CreateConnection();
+	//	if(peer.HasPeace(0);
 		//std::vector<char> testVect;
 		//testVect.push_back('a');
 		//	BitArray biArr(testVect);
@@ -76,11 +78,11 @@ public:
 		bitRequest.Connect(peers.GetKeyByIndex(1), peers.GetValueByIndex(1));
 		bitRequest.HandShake(peers.GetKeyByIndex(1), peers.GetValueByIndex(1), infoHash);
 		char * buffer = new char[180];
-		bitRequest.Recv(180, buffer);
+		bitRequest.Recv(buffer, 180, 180);
 
 		char * buffer2 = new char[19];
 		// BitField
-		std::vector<char> vect = bitRequest.Recv(19, buffer2);
+		int recieved = bitRequest.Recv(buffer2, 19, 19);
 
 
 

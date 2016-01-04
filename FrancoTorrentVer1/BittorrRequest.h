@@ -19,8 +19,6 @@ public:
 
 	void PushInteger(int integer, std::vector<char> & buffer);
 
-	std::vector<char> Recv(int requestedLength, char * buffer);
-
 	int RecvPiece(int requestedLength, std::string path);
 
 private:
