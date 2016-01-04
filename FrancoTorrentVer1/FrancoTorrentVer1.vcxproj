@@ -70,7 +70,6 @@
     <ClInclude Include="Bencoding.h" />
     <ClInclude Include="BittorrRequest.h" />
     <ClInclude Include="File.h" />
-    <ClInclude Include="HTTPClient.h" />
     <ClInclude Include="HTTPRequest.h" />
     <ClInclude Include="HTTPTracker.h" />
     <ClInclude Include="OrderedMap.h" />
@@ -83,6 +82,7 @@
     <ClCompile Include="..\..\sha1.cpp" />
     <ClCompile Include="Bencoding.cpp" />
     <ClCompile Include="BitArray.h" />
+    <ClCompile Include="BittorrRequest.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="HTTPRequest.cpp" />
     <ClCompile Include="HTTPTracker.cpp" />
@@ -90,6 +90,7 @@
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="Tcp.h" />
+    <ClCompile Include="TrackerResponse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MyTorrent.torrent" />

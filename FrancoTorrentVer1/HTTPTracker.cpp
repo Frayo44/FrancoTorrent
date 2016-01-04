@@ -32,7 +32,7 @@ HTTPTracker::HTTPTracker(std::string path)
 	
 	std::string s = (*v1.dictionary.GetValueByKey("peers")).text;
 	
-	OrderedMap<std::string, unsigned short> peers = trackerResponse.DecodePeers5((char *)s.c_str());
+	OrderedMap<std::string, unsigned short> peers = trackerResponse.DecodePeers((char *)s.c_str());
 	TcpPeers tcpPeers(peers, GetSha1(bencoder));
 }
 

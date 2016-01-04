@@ -28,17 +28,15 @@ Value Bencoding::Decode(const TByte *encoded, int length)
 	//std::string  s = this->tree.dictionary.getKeyByIndex(4);
 	std::cout << "Success?: " << isSuccess << std::endl;
 
-
-	/*unsigned char hash[20];
+	/**unsigned char hash[20];
 	char hexstring[41];
-
 
 	sha1::sha11 sha1;
 
 	sha1.calc("1 1", 3, hash); // 10 is the length of the string
 	sha1.toHexString(hash, hexstring);
 
-	int i = 7; */
+	int i = 7; **/
 
 	return tree;
 }
