@@ -39,6 +39,58 @@ Value Bencoding::Decode(const TByte *encoded, int length)
 	int i = 7; **/
 
 	return tree;
+
+
+}
+
+Value Bencoding::SearchForValueByKey(std::string key)
+{
+	/*switch (tree.dataType)
+	{
+		case ValueType
+	default:
+		break;
+	}*/
+	return Search(key, tree);
+}
+
+Value Bencoding::Search(std::string key, Value obj)
+{
+	switch (obj.dataType)
+	{
+	case LIST:
+		return SearchInList(key, obj.list.at(i));
+		break;
+	case DICTIONARY:
+
+		if (obj.dictionary.GetKeyByIndex(i) == key)
+		{
+			return * obj.dictionary.GetValueByIndex(i);
+		}
+
+		return Search(key, *obj.dictionary.GetValueByIndex(i));
+		
+		break;
+	default:
+		//return Search(key, NULL);
+		break;
+	}
+}
+
+Value Bencoding::SearchInList(std::string key, Value obj)
+{
+	Search(key, obj);
+	obj.list.erase(obj.list.begin() + 1);
+	return SearchInList(key, obj.list.at(0));
+}
+
+Value Bencoding::SearchInDict(std::string key, Value obj)
+{
+
+	if (obj.dictionary.GetKeyByIndex(0) == key)
+		return *obj.dictionary.GetValueByIndex(0);
+	
+
 }
 
 

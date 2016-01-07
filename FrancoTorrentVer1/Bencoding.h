@@ -20,7 +20,7 @@
 /**
 *	Purpose: Determine the type of variable.
 */
-enum class ValueType {
+enum ValueType {
 	UNINITIALIZED,
 	INTEGER, STRING, LIST, DICTIONARY
 };
@@ -80,6 +80,9 @@ public:
 
 	TToken Encode(const std::string key);
 	Value Decode(const TByte *encoded, int length);
+	Value SearchForValueByKey(std::string key);
+	Value SearchInList(std::string key, Value obj);
+
 
 private:
 
@@ -133,6 +136,10 @@ private:
 	* @param counter a counter.
 	*/
 	void Tokenize(TByte *encoded, std::vector<TToken>& tokens, int length, int counter);
+
+	
+
+	Value Search(std::string key, Value obj);
 
 	TToken FillContent(Value map);
 

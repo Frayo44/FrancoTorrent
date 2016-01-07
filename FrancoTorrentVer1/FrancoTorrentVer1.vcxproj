@@ -73,6 +73,7 @@
     <ClInclude Include="HTTPRequest.h" />
     <ClInclude Include="HTTPTracker.h" />
     <ClInclude Include="OrderedMap.h" />
+    <ClInclude Include="PeerData.h" />
     <ClInclude Include="sha1.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="TcpPeers.h" />

@@ -31,10 +31,10 @@ public:
 		return isConnected;
 	}
 
-	void CreateConnection()
+	bool CreateConnection()
 	{
 		if (!bitRequest->Connect(ip, port)) 
-			return;
+			return false;
 
 		bitRequest->HandShake(ip, port, infoHash);
 		char * buffer = new char[182];

@@ -8,6 +8,8 @@
 #include "BitArray.h"
 #include "Bencoding.h"
 #include <thread>
+#include <iostream>
+#include "PeerData.h"
 
 class TcpPeers
 {
@@ -37,12 +39,48 @@ public:
 		//		t1.join();
 	}
 
+	void PeerCommunication(PeerData &peerData, std::string infoHash)
+	{
+		Peer peer(peerData.GetIP(), peerData.GetPort(), infoHash);
+		bool isConnected = peer.CreateConnection();
+		if (isConnected)
+		{
+			peer.HasPeace(0);
+			peer.RecievePeace(0, 4056211 + 291); 
+		}
+	}
+
+	void task1()
+	{
+		std::cout << "task1 says: " << "";
+	}
+	
 	TcpPeers(OrderedMap<std::string, unsigned short> peers, std::string infoHash, Bencoding bencoder)
 	{
+		Value v = bencoder.SearchForValueByKey("files");
+	//	bencoder.tree.dictionary.GetValueByKey("")
 
+		std::vector<std::thread> threads;
+		//std::thread ttt[num_threads];
+		//std::thread t1(task1, "Hello");
+		for (std::size_t i = 0; i < peers.GetSize(); i++)
+		{
+			PeerData pd(peers.GetKeyByIndex(i), peers.GetValueByIndex(i));
+			
+			threads.push_back(std::thread(&TcpPeers::PeerCommunication,this,  pd, infoHash));
+		}
 
-		Peer peer(peers.GetKeyByIndex(1), peers.GetValueByIndex(1), infoHash);
-		peer.CreateConnection();
+		for (std::size_t i = 0; i < peers.GetSize(); i++)
+		{
+			threads.at(i).join();
+		}
+		//PeerData pd(peers.GetKeyByIndex(1), peers.GetValueByIndex(1));
+	//	std::thread t2(&PeerCommunication, pd, infoHash);
+	//	std::thread first(&foo);
+
+	//	Peer peer(peers.GetKeyByIndex(1), peers.GetValueByIndex(1), infoHash);
+	//	peer.CreateConnection();
+
 	//	if(peer.HasPeace(0);
 		//std::vector<char> testVect;
 		//testVect.push_back('a');
@@ -74,7 +112,7 @@ public:
 		//t1.join();
 
 
-		BittorrRequest bitRequest;
+		/*BittorrRequest bitRequest;
 		bitRequest.Connect(peers.GetKeyByIndex(1), peers.GetValueByIndex(1));
 		bitRequest.HandShake(peers.GetKeyByIndex(1), peers.GetValueByIndex(1), infoHash);
 		char * buffer = new char[180];
@@ -121,7 +159,7 @@ public:
 			}
 		}
 
-		int i = 0;
+		int i = 0; */
 
 
 
