@@ -81,7 +81,8 @@ public:
 	TToken Encode(const std::string key);
 	Value Decode(const TByte *encoded, int length);
 	Value SearchForValueByKey(std::string key);
-	Value SearchInList(std::string key, Value obj);
+	//Value SearchInList(std::string key, Value obj);
+	//Value SearchInDict(std::string key, Value obj);
 
 
 private:
@@ -139,7 +140,7 @@ private:
 
 	
 
-	Value Search(std::string key, Value obj);
+	//Value Search(std::string key, Value obj);
 
 	TToken FillContent(Value map);
 

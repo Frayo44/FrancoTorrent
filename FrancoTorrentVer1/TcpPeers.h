@@ -18,6 +18,7 @@ private:
 	Socket * sock;
 	int size;
 	Peer*	peersArr;
+	std::vector<Value> files;
 public:
 	void PeerHandeling()
 	{
@@ -45,8 +46,11 @@ public:
 		bool isConnected = peer.CreateConnection();
 		if (isConnected)
 		{
-			peer.HasPeace(0);
-			peer.RecievePeace(0, 4056211 + 291); 
+			for (std::size_t i = 0; i < files.size(); i++)
+			{
+				peer.HasPeace(0);
+				peer.RecievePeace(0, 4056211 + 291); 
+			}
 		}
 	}
 
@@ -57,8 +61,9 @@ public:
 	
 	TcpPeers(OrderedMap<std::string, unsigned short> peers, std::string infoHash, Bencoding bencoder)
 	{
-		Value v = bencoder.SearchForValueByKey("files");
-	//	bencoder.tree.dictionary.GetValueByKey("")
+		//Value v = bencoder.SearchForValueByKey("files");
+		std::vector<Value> files = (*(*bencoder.tree.dictionary.GetValueByKey("info")).dictionary.GetValueByKey("files")).list;
+		this->files = files;
 
 		std::vector<std::thread> threads;
 		//std::thread ttt[num_threads];

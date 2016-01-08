@@ -42,15 +42,10 @@ Value Bencoding::Decode(const TByte *encoded, int length)
 
 
 }
-
+/*
 Value Bencoding::SearchForValueByKey(std::string key)
 {
-	/*switch (tree.dataType)
-	{
-		case ValueType
-	default:
-		break;
-	}*/
+
 	return Search(key, tree);
 }
 
@@ -91,7 +86,7 @@ Value Bencoding::SearchInDict(std::string key, Value obj)
 		return *obj.dictionary.GetValueByIndex(0);
 	
 
-}
+}*/
 
 
 Value Bencoding::FillTree(std::vector<TToken>& tokens)
