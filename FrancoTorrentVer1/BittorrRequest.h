@@ -15,7 +15,7 @@ public:
 
 	void HavePiece(int index);
 
-	void RequestPiece(int index, int begin, int length);
+	bool RequestPiece(int index, int begin, int length);
 
 	void PushInteger(int integer, std::vector<char> & buffer);
 

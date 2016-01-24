@@ -6,7 +6,7 @@ void BittorrRequest::HandShake(std::string ip, int port, std::string infoHash)
 	//Tcp::Connect(ip, port);
 
 	std::string protocolStr = "BitTorrent protocol";
-	std::string hashAndID = infoHash + "ABCDEFGHIJKLMNOPQRST";
+	std::string hashAndID = infoHash + "ApCpggoHIJKLMNOiQRST";
 	char protocolStrLen = (char)protocolStr.size();
 
 	buffer.push_back(protocolStrLen);
@@ -76,7 +76,7 @@ void BittorrRequest::HavePiece(int index)
 	Send(buff, buffer.size());
 }
 
-void BittorrRequest::RequestPiece(int index, int begin, int length)
+bool BittorrRequest::RequestPiece(int index, int begin, int length)
 {
 	std::vector<char> buffer;
 	int msgLength = 13, msgType = 6;
@@ -95,7 +95,13 @@ void BittorrRequest::RequestPiece(int index, int begin, int length)
 		buff[i] = buffer.at(i);
 	}
 
-	Send(buff, buffer.size());
+	if (!Send(buff, buffer.size()))
+	{
+		Tcp::Disconnect();
+		return false;
+	}
+
+	return true;
 }
 
 void BittorrRequest::PushInteger(int integer, std::vector<char> & buffer)
@@ -116,14 +122,16 @@ int BittorrRequest::RecvPiece(int requestedLength, std::string path)
 
 	//buffer = new char[1506];
 	int recieved = Tcp::Recv(buffer, requestedLength, requestedLength);
+	int recieved2 = Tcp::Recv(buffer, requestedLength, requestedLength);
 
 	if (recieved > 0)
 	{
+
 		//sumPieces += recieved;
-		file.WriteToFile(buffer, recieved);
+		file.WriteToFile(buffer + 13, recieved);
 		sumPieces += recieved;
 		counter++;
-	}
+	} 
 
 	//delete[] buffer;
 	file.Close();

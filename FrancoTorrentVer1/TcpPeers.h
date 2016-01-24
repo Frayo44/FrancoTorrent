@@ -10,6 +10,7 @@
 #include <thread>
 #include <iostream>
 #include "PeerData.h"
+#include "PieceItem.h"
 
 class TcpPeers
 {
@@ -19,6 +20,11 @@ private:
 	int size;
 	Peer*	peersArr;
 	std::vector<Value> files;
+	int pieceLength;
+	long totalSumPieces;
+	int numPieces;
+	std::vector<PieceItem> pieces;
+
 public:
 	void PeerHandeling()
 	{
@@ -42,28 +48,187 @@ public:
 
 	void PeerCommunication(PeerData &peerData, std::string infoHash)
 	{
-		Peer peer(peerData.GetIP(), peerData.GetPort(), infoHash);
+		Peer peer(peerData.GetIP(), peerData.GetPort(), infoHash, pieces);
 		bool isConnected = peer.CreateConnection();
 		if (isConnected)
 		{
-			for (std::size_t i = 0; i < files.size(); i++)
+
+			std::thread thread(&Peer::Listen, peer);
+
+			int indexCounter = 0;
+			int fromOffset = 0, toOffset = 0, filesCounter = 0;
+			for (std::size_t i = 0; i < numPieces; i++)
 			{
-				peer.HasPeace(0);
-				peer.RecievePeace(0, 4056211 + 291); 
+			//	peer.HasPeace(pieceCounter);
+				//char * pieceData = new char[pieceLength];
+				
+				toOffset = (*files.at(filesCounter).dictionary.GetValueByKey("length")).integer;
+				if (toOffset > pieceLength)
+				{
+					//peer.RecievePeace2(GetPieceIndex(filesCounter), fromOffset, toOffset, pieceLength);
+				//	peer.bitRequest->RequestPiece(0, 0, toOffset);
+				}
+				else {
+				//	peer.RecievePeace2(GetPieceIndex(filesCounter), fromOffset, toOffset, pieceLength);
+				}
+				filesCounter++;
+				fromOffset = toOffset;
+
+				if (fromOffset > pieceLength)
+				{
+					fromOffset = toOffset % pieceLength;
+				}
+				//4056211 + 291); 
+				indexCounter++;
+				//peer.RecievePeace2(pieceCounter, pieceLength, pieceLength);//4056211 + 291); 
+				//pieceCounter++;
+				//peer.HasPeace(0);
+				//peer.RecievePeace(0, 4056211 + 291); 
+
 			}
+
+			thread.join();
 		}
 	}
 
-	void task1()
+
+	void FillPieces(int index, int pieceIndex, int startOffSet)
 	{
-		std::cout << "task1 says: " << "";
+		int fileSize = (*files.at(pieceIndex).dictionary.GetValueByKey("length")).integer;
+		if (index <= 0)
+		{
+			//PieceItem pieceItem(0, -1, 0, GetRequestSize(fileSize), -1);
+			//pieces.push_back(pieceItem);
+//			return FillPieces(index + 1, )
+		}
+
+		
+	}
+
+	int GetRequestSize(int fileSize)
+	{
+		if (fileSize > 16384)
+		{
+			return 16384;
+		}
+		else {
+			return fileSize;
+		}
+	}
+
+	void fillPiecesIndexes()
+	{
+		// Block Size
+		int blockSize = pieceLength;
+		int currIndex = 0;
+		int requestIndex = 0;
+		bool changed = false;
+		for (int i = 0; i < files.size(); i++)
+		{
+
+			int fileSize = (*files.at(i).dictionary.GetValueByKey("length")).integer;
+			std::string str = (*files.at(i).dictionary.GetValueByKey("path")).list.at(0).text;
+
+			if (i > 0)
+			{
+				PieceItem pieceItem(currIndex, currIndex + fileSize / blockSize, pieces.at(i - 1).endOffSet, pieces.at(i - 1).endOffSet + (fileSize % blockSize), fileSize, str);
+				pieces.push_back(pieceItem);
+			}
+			else {
+				PieceItem pieceItem(currIndex, 0 + fileSize / blockSize, 0, 0 + (fileSize % 16384), fileSize, str);
+				pieces.push_back(pieceItem);
+			}
+
+			currIndex += fileSize / blockSize;
+		}
+
+			//for (int a = 0; a < fileSize; a += 16384)
+			//{
+			//	
+			//	
+
+			//	if (i > 0)
+			//	{
+			//		if (changed)
+			//		{
+			//			PieceItem pieceItem(currIndex, -1, 0, offSetEnd, fileSize);
+			//			pieces.push_back(pieceItem);
+			//			changed = false;
+			//		}
+			//		else {
+			//			PieceItem pieceItem(currIndex, -1, pieces.at(i - 1).endOffSet, pieces.at(i - 1).endOffSet + offSetEnd, fileSize);
+			//			pieces.push_back(pieceItem);
+			//		}
+			//		
+			//		//	currIndex++;
+			//		//}
+			//	}
+			//	else {
+			//		PieceItem pieceItem(0, -1, 0, offSetEnd, fileSize);
+			//		pieces.push_back(pieceItem);
+			//		//currIndex++;
+			//	}
+
+			//	if (i > 0)
+			//	{
+			//		if (pieces.at(i - 1).endOffSet >= pieceLength)
+			//		{
+			//			currIndex++;
+			//			changed = true;
+			//		}
+			//	}
+					//currIndex += pieces.at(i - 1).endOffSet + ;
+			
+
+
+
+
+
+
+
+
+			
+
+			
+			
+		
+	}
+
+
+	int GetPieceIndex(int pieceIndex)
+	{
+		int until = 0;
+		for (int i = 0; i < pieceIndex; i++)
+		{
+			until += (*files.at(i).dictionary.GetValueByKey("length")).integer;
+		}
+
+		return until / pieceLength;
+		//	int singlePieceLength = (*files.at(pieceIndex).dictionary.GetValueByKey("length")).integer;
 	}
 	
 	TcpPeers(OrderedMap<std::string, unsigned short> peers, std::string infoHash, Bencoding bencoder)
 	{
+
+	
 		//Value v = bencoder.SearchForValueByKey("files");
 		std::vector<Value> files = (*(*bencoder.tree.dictionary.GetValueByKey("info")).dictionary.GetValueByKey("files")).list;
 		this->files = files;
+	
+		
+
+		for (std::size_t i = 0; i < files.size(); i++)
+		{
+			totalSumPieces += (*files.at(i).dictionary.GetValueByKey("length")).integer;
+		}
+
+		pieceLength = (*(*bencoder.tree.dictionary.GetValueByKey("info")).dictionary.GetValueByKey("piece length")).integer;
+
+
+		fillPiecesIndexes();
+
+
+		numPieces = totalSumPieces / pieceLength;
 
 		std::vector<std::thread> threads;
 		//std::thread ttt[num_threads];

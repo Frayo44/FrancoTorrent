@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Socket.h"
+#include "SelectSocket.h"
 
 class Tcp
 {
 public:
 	Tcp()
 	{
-		this->socket = new Socket(SOCK_STREAM, IPPROTO_TCP);
+		this->socket = new SelectSocket(SOCK_STREAM, IPPROTO_TCP);
 	}
 
 	virtual bool Connect(std::string ip, int port)
@@ -15,22 +15,30 @@ public:
 		return socket->Connect(ip, port);
 	}
 
-	virtual void Send(char * buffer, int bufferLen)
+	virtual bool Send(char * buffer, int bufferLen)
 	{
-		socket->Send(buffer, bufferLen);
+		return socket->Send(buffer, bufferLen);
 	}
 
 	virtual void Disconnect()
 	{
-		socket->DisConnect();
+		//socket->DisConnect();
 	}
 
 	virtual int Recv(char * buffer, int bufferLen, int toRecieve)
 	{
-		int i = socket->Recieve(buffer, bufferLen, toRecieve);
+		//int i = socket->Recieve(buffer, bufferLen, toRecieve);
+		int i = socket->Recv(buffer, bufferLen);
+		return i;
+	}
+
+	virtual int RecvBySize(char * buffer, int bufferLen, int toRecieve)
+	{
+		//int i = socket->Recieve(buffer, bufferLen, toRecieve);
+		int i = socket->RecvBySize(buffer, bufferLen);
 		return i;
 	}
 
 private:
-	Socket * socket;
+	SelectSocket * socket;
 };

@@ -59,10 +59,11 @@ bool Socket::Connect(const std::string &foreignAddress, int foreignPort)
 	return true;
 }
 
-void Socket::Send(const char *buffer, int bufferLen)
+bool Socket::Send(const char *buffer, int bufferLen)
 {
 	if (send(sock, (const char *)buffer, bufferLen, 0) < 0) {
-		throw ("Send failed (send())");
+		//throw ("Send failed (send())");
+		return false;
 	}
 }
 

@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sys/stat.h>
 
 class File
 {
@@ -20,5 +21,7 @@ public:
 	void Close();
 
 	void WriteToFile(char * toWrite, int fileLength);
+
+	bool File::exists_test0(const std::string& name);
 
 };

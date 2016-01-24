@@ -48,6 +48,12 @@
     <ClInclude Include="PeerData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SelectSocket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PieceItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Program.cpp">
@@ -89,7 +95,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MyTorrent.torrent" />
-    <None Include="torr2.torrent" />
-    <None Include="redum.torrent" />
   </ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ public:
 	
 	bool Connect(const std::string &foreignAddress, int foreignPort);
 
-	void Send(const char *buffer, int bufferLen);
+	bool Send(const char *buffer, int bufferLen);
 
 	int Recieve(char *buffer, int bufferLen, int toRecieve);
 };
