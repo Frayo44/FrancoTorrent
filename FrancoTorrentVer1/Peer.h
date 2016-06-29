@@ -76,27 +76,88 @@ public:
 		bitRequest->Interested();
 
 		isConnected = true;
-		//return true;
+		return true;
+	}
+
+	void RecvPiece(PieceItem & piece)
+	{
+		firstTimee();
+		int fileLength = piece.fileSize;
+		int beginOffset = piece.beginOffSet;
+		bitRequest->RequestPiece(piece.startIndex, piece.beginOffSet, 16384);
+
+		while (true)
+		{
+
+			int i = 0;
+			char buffer[5];
+			int recievedLength = bitRequest->Recv(buffer, 5, 5);
+			char buffer2[1500];
+			int ss = 0;
+			if (recievedLength > 0)
+			{
+				//recievedLength = 
+				switch (buffer[4])
+				{
+				case '\x1':
+					// Unchoke
+					//bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+					break;
+				case '\x5':
+					if (buffer[0] == '\x0')
+						bitRequest->Recv(buffer2, buffToInteger(buffer) - 1, 5);
+					else
+						bitRequest->Recv(buffer2, 4, 5);
+					break;
+				case '\x7':
+					// Piece
+					ss = buffToInteger(buffer) - 1;
+					GetPiece(ss);
+					//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+					break;
+				case '\x14':
+					// Piece
+					ss = buffToInteger(buffer) - 1;
+					bitRequest->Recv(buffer2, ss, 5);
+					//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+					break;
+				default:
+					//int size = bitRequest->Recv(buffer2, 4, 5);
+					break;
+				}
+
+			}
+		}
+
+
+	}
+
+	void firstTimee()
+	{
+		if (firstTime)
+		{
+			char * buffer = new char[68];
+			// Handshake (Extended)
+			int recieved = bitRequest->Recv(buffer, 68, 68);
+
+			if (recieved > 0 && buffer[0] == '\x13')
+			{
+				// Handshake recieved
+			}
+
+			firstTime = false;
+		}
+
 	}
 
 	void Listen()
 	{
 		while (!finished)
 		{
+			firstTimee();
 
-			if (firstTime)
-			{
-				char * buffer = new char[68];
-				// Handshake (Extended)
-				int recieved = bitRequest->Recv(buffer, 68, 68);
-				
-				if (recieved > 0 && buffer[0] == '\x13')
-				{
-					// Handshake recieved
-				}
-
-				firstTime = false;
 				pieceSize = pieces.at(0).fileSize;
+				
 				if (pieceSize > 16384)
 					bitRequest->RequestPiece(0, 0, 16384);
 				else {
@@ -142,7 +203,7 @@ public:
 					break;
 				}
 			}
-		}
+		
 	}
 
 	void GetPiece(int size)

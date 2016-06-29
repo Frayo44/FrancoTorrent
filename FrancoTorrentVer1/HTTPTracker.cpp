@@ -8,6 +8,7 @@ HTTPTracker::HTTPTracker(std::string path)
 
 	Bencoding bencoder;
 
+	// Decode the Bittorent File, stores dictionary inside it.
 	bencoder.Decode(myFile.GetConetnt(), myFile.GetSize());
 
 	BuildURI(bencoder);
@@ -66,7 +67,16 @@ void HTTPTracker::BuildURI(Bencoding &bencoder)
 	httpRequest.SetUri("port", "20383");
 	httpRequest.SetUri("uploaded", "0");
 	httpRequest.SetUri("downloaded", "0");
-	httpRequest.SetUri("left", "101765749");
+
+	int totalSumPieces = 0;
+	std::vector<Value> files = (*(*bencoder.tree.dictionary.GetValueByKey("info")).dictionary.GetValueByKey("files")).list;
+
+	for (std::size_t i = 0; i < files.size(); i++)
+	{
+		totalSumPieces += (*files.at(i).dictionary.GetValueByKey("length")).integer;
+	}
+	
+	httpRequest.SetUri("left", std::to_string(totalSumPieces));
 	httpRequest.SetUri("event", "started");
 }
 

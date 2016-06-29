@@ -5,7 +5,7 @@
 void main(void)
 {
 
-	HTTPTracker tracker("muzik.torrent");
+	HTTPTracker tracker("MyTorrent.torrent");
 
 	//std::cout << __cplusplus << std::endl;
 

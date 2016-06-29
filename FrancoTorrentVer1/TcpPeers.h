@@ -53,7 +53,8 @@ public:
 		if (isConnected)
 		{
 
-			std::thread thread(&Peer::Listen, peer);
+			//std::thread thread(&Peer::Listen, peer);
+			peer.RecvPiece(pieces.at(1));
 
 			int indexCounter = 0;
 			int fromOffset = 0, toOffset = 0, filesCounter = 0;
@@ -87,7 +88,7 @@ public:
 
 			}
 
-			thread.join();
+			//thread.join();
 		}
 	}
 
