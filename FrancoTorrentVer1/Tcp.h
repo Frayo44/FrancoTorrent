@@ -32,7 +32,7 @@ public:
 		return i;
 	}
 
-	virtual int RecvBySize(char * buffer, int bufferLen, int toRecieve)
+	virtual int RecvBySize(char * buffer, int bufferLen)
 	{
 		//int i = socket->Recieve(buffer, bufferLen, toRecieve);
 		int i = socket->RecvBySize(buffer, bufferLen);

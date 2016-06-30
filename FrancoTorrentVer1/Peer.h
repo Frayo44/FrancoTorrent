@@ -17,7 +17,7 @@ private:
 	std::vector<PieceItem> pieces;
 	int currFileIndex, currOffSet;
 	int pieceSize = 0, offset = 0, requestSize = 0, currPieceIndex = 0;
-
+	char * newBuffer;
 
 	int dataToDownaload = 0;
 
@@ -82,14 +82,14 @@ public:
 	void RecvPiece(PieceItem & piece)
 	{
 		firstTimee();
-		int fileLength = piece.fileSize;
-		int beginOffset = piece.beginOffSet;
 		bitRequest->RequestPiece(piece.startIndex, piece.beginOffSet, 16384);
-
-		while (true)
+		currPieceIndex = piece.startIndex;
+		pieceSize = piece.fileSize;
+		std::size_t dataRecieved = 0;
+		while (dataRecieved < piece.fileSize)
 		{
 
-			int i = 0;
+			int i = piece.startIndex;
 			char buffer[5];
 			int recievedLength = bitRequest->Recv(buffer, 5, 5);
 			char buffer2[1500];
@@ -112,7 +112,7 @@ public:
 				case '\x7':
 					// Piece
 					ss = buffToInteger(buffer) - 1;
-					GetPiece(ss);
+					dataRecieved += GetPiece(ss);
 					//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
 					break;
 				case '\x14':
@@ -150,23 +150,30 @@ public:
 
 	}
 
-	void Listen()
+	void Listen(PieceItem & piece)
 	{
+		pieceSize = piece.fileSize;
+		offset = piece.beginOffSet;
+		currPieceIndex = piece.startIndex;
+		currFileIndex = piece.fileIndex;
 		while (!finished)
 		{
-			firstTimee();
+			if (firstTime)
+			{
+				firstTimee();
 
-				pieceSize = pieces.at(0).fileSize;
 				
+
 				if (pieceSize > 16384)
-					bitRequest->RequestPiece(0, 0, 16384);
+					bitRequest->RequestPiece(piece.startIndex, offset, 16384);
 				else {
+
 					bitRequest->RequestPiece(0, 0, pieceSize);
 				}
 				continue;
 			}
 
-			int i = 0;
+	
 			char buffer[5];
 			int recievedLength = bitRequest->Recv(buffer, 5, 5);
 			char buffer2[1500];
@@ -179,8 +186,8 @@ public:
 				case '\x1':
 					// Unchoke
 					//bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
-					break; 
-				case '\x5' :
+					break;
+				case '\x5':
 					if (buffer[0] == '\x0')
 						bitRequest->Recv(buffer2, buffToInteger(buffer) - 1, 5);
 					else
@@ -190,7 +197,7 @@ public:
 					// Piece
 					ss = buffToInteger(buffer) - 1;
 					GetPiece(ss);
-				//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+					//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
 					break;
 				case '\x14':
 					// Piece
@@ -203,15 +210,16 @@ public:
 					break;
 				}
 			}
-		
-	}
 
-	void GetPiece(int size)
+		}
+
+			
+	} 
+
+	int GetPiece(int size)
 	{
-		//int size = presSize -  
-		//std::cout << "Downloading File Index: " + currFileIndex <<  " More: " + pieceSize - size;
-		char * newBuffer = new char[size];
-		bitRequest->RecvBySize(newBuffer, size, 5);
+	    newBuffer = new char[size];
+		bitRequest->RecvBySize(newBuffer, size);
 
 
 
@@ -221,9 +229,8 @@ public:
 		file.Close();
 
 
-		delete[] newBuffer;
 
-		pieceSize -= size - 8;
+		pieceSize -= (size - 8);
 		std::cout << "Downloading File Index: " << currFileIndex << " More: " << pieceSize << std::endl;
 
 		if (pieceSize <= 0)
@@ -241,6 +248,7 @@ public:
 				requestSize = 1048576 - offset;
 				if (requestSize == 0)
 				{
+					bitRequest->HavePiece(currPieceIndex);
 					offset = 0;
 					currPieceIndex++;
 					if (pieceSize > 16384)
@@ -264,22 +272,7 @@ public:
 		
 
 		bitRequest->RequestPiece(currPieceIndex, offset, requestSize);
-
-		/*if (offset + requestSize > 1048576)
-		{
-			offset = 1048576;
-		} else*/
-		
-
-
-		
-
-
-		//}
-
-		//file.Close();
-		
-		
+		return size - 8;
 	}
 
 	int buffToInteger(char * buffer)

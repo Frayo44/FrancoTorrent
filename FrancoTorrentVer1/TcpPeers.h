@@ -45,7 +45,7 @@ public:
 
 		//		t1.join();
 	}
-
+	bool done = false;
 	void PeerCommunication(PeerData &peerData, std::string infoHash)
 	{
 		Peer peer(peerData.GetIP(), peerData.GetPort(), infoHash, pieces);
@@ -54,8 +54,13 @@ public:
 		{
 
 			//std::thread thread(&Peer::Listen, peer);
-			peer.RecvPiece(pieces.at(1));
-
+			//peer.RecvPiece(pieces.at(1));
+			if (!done)
+			{
+				done = true;
+			peer.Listen(pieces.at(0));
+			}
+		
 			int indexCounter = 0;
 			int fromOffset = 0, toOffset = 0, filesCounter = 0;
 			for (std::size_t i = 0; i < numPieces; i++)
@@ -63,15 +68,15 @@ public:
 			//	peer.HasPeace(pieceCounter);
 				//char * pieceData = new char[pieceLength];
 				
-				toOffset = (*files.at(filesCounter).dictionary.GetValueByKey("length")).integer;
-				if (toOffset > pieceLength)
-				{
+			//	toOffset = (*files.at(filesCounter).dictionary.GetValueByKey("length")).integer;
+				//if (toOffset > pieceLength)
+				//{
 					//peer.RecievePeace2(GetPieceIndex(filesCounter), fromOffset, toOffset, pieceLength);
 				//	peer.bitRequest->RequestPiece(0, 0, toOffset);
-				}
-				else {
+				//}
+				//else {
 				//	peer.RecievePeace2(GetPieceIndex(filesCounter), fromOffset, toOffset, pieceLength);
-				}
+			//	}
 				filesCounter++;
 				fromOffset = toOffset;
 
@@ -132,11 +137,11 @@ public:
 
 			if (i > 0)
 			{
-				PieceItem pieceItem(currIndex, currIndex + fileSize / blockSize, pieces.at(i - 1).endOffSet, pieces.at(i - 1).endOffSet + (fileSize % blockSize), fileSize, str);
+				PieceItem pieceItem(currIndex, currIndex + fileSize / blockSize, pieces.at(i - 1).endOffSet, pieces.at(i - 1).endOffSet + (fileSize % 1048576), fileSize, str, i);
 				pieces.push_back(pieceItem);
 			}
 			else {
-				PieceItem pieceItem(currIndex, 0 + fileSize / blockSize, 0, 0 + (fileSize % 16384), fileSize, str);
+				PieceItem pieceItem(currIndex, 0 + fileSize / blockSize, 0, 0 + (fileSize % 1048576), fileSize, str, i);
 				pieces.push_back(pieceItem);
 			}
 

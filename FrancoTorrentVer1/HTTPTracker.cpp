@@ -9,8 +9,9 @@ HTTPTracker::HTTPTracker(std::string path)
 	Bencoding bencoder;
 
 	// Decode the Bittorent File, stores dictionary inside it.
-	bencoder.Decode(myFile.GetConetnt(), myFile.GetSize());
-
+	Value v = bencoder.Decode(myFile.GetConetnt(), myFile.GetSize());
+	if (v.dataType == ValueType::UNINITIALIZED)
+		throw "Error while decoding Torrent file!";
 	BuildURI(bencoder);
 
 	std::string announceUrl = (*bencoder.tree.dictionary.GetValueByKey("announce")).text;
@@ -28,9 +29,10 @@ HTTPTracker::HTTPTracker(std::string path)
 	*(buffer + recieved) = '\0';
 
 	TrackerResponse trackerResponse(buffer, recieved);
-
-	Value v1 = (Value) trackerResponse.GetResponse();
 	
+	Value v1 = (Value) trackerResponse.GetResponse();
+	if (v1.dataType == ValueType::UNINITIALIZED)
+		throw "Error while getting tracker response!";
 	std::string s = (*v1.dictionary.GetValueByKey("peers")).text;
 	
 	OrderedMap<std::string, unsigned short> peers = trackerResponse.DecodePeers((char *)s.c_str());
