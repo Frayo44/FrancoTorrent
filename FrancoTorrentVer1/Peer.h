@@ -253,10 +253,10 @@ public:
 					firstTimee();
 					decide();
 					if (pieceSize > 16384)
-						bitRequest->RequestPiece(piece.startIndex, offset, 16384);
+						bitRequest->RequestPiece(piece.lastIndex, offset, 16384);
 					else {
 
-						bitRequest->RequestPiece(0, 0, pieceSize);
+						bitRequest->RequestPiece(piece.lastIndex, offset, pieceSize);
 					}
 					continue;
 				}
