@@ -6,7 +6,7 @@ void main(void)
 {
 	try
 	{
-		HTTPTracker tracker("MyTorrent.torrent");
+		HTTPTracker tracker("toorrrent.torrent");
 	}
 	catch (const char* msg)
 	{

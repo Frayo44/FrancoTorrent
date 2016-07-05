@@ -4,7 +4,10 @@
 #include <winsock.h>	
 #include <iostream>
 
-
+/*
+	Notice: I don't use this class...
+	TODO: Remove...
+*/
 class Socket
 {
 private:

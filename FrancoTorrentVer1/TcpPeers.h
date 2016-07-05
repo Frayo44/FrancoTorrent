@@ -46,6 +46,7 @@ public:
 		//		t1.join();
 	}
 	bool done = false;
+
 	void PeerCommunication(PeerData &peerData, std::string infoHash)
 	{
 		
@@ -76,31 +77,6 @@ public:
 			}
 			
 			//thread.join();
-		}
-	}
-
-
-	void FillPieces(int index, int pieceIndex, int startOffSet)
-	{
-		int fileSize = (*files.at(pieceIndex).dictionary.GetValueByKey("length")).integer;
-		if (index <= 0)
-		{
-			//PieceItem pieceItem(0, -1, 0, GetRequestSize(fileSize), -1);
-			//pieces.push_back(pieceItem);
-//			return FillPieces(index + 1, )
-		}
-
-		
-	}
-
-	int GetRequestSize(int fileSize)
-	{
-		if (fileSize > 16384)
-		{
-			return 16384;
-		}
-		else {
-			return fileSize;
 		}
 	}
 
@@ -142,19 +118,6 @@ public:
 		
 	}
 
-
-	int GetPieceIndex(int pieceIndex)
-	{
-		int until = 0;
-		for (int i = 0; i < pieceIndex; i++)
-		{
-			until += (*files.at(i).dictionary.GetValueByKey("length")).integer;
-		}
-
-		return until / pieceLength;
-		//	int singlePieceLength = (*files.at(pieceIndex).dictionary.GetValueByKey("length")).integer;
-	}
-	
 	TcpPeers(OrderedMap<std::string, unsigned short> peers, std::string infoHash, Bencoding bencoder)
 	{
 
@@ -323,6 +286,5 @@ public:
 		Send((const char *) buffer); */
 
 	}
-
 
 };
