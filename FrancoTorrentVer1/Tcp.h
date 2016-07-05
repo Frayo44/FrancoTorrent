@@ -22,17 +22,17 @@ public:
 
 	virtual void Disconnect()
 	{
-		//socket->DisConnect();
+		socket->Disconnect();
 	}
 
-	virtual int Recv(char * buffer, int bufferLen, int toRecieve)
+	virtual int Recv(char * buffer, int bufferLen, int toRecieve) throw()
 	{
 		//int i = socket->Recieve(buffer, bufferLen, toRecieve);
 		int i = socket->Recv(buffer, bufferLen);
 		return i;
 	}
 
-	virtual int RecvBySize(char * buffer, int bufferLen)
+	virtual int RecvBySize(char * buffer, int bufferLen) throw()
 	{
 		//int i = socket->Recieve(buffer, bufferLen, toRecieve);
 		int i = socket->RecvBySize(buffer, bufferLen);

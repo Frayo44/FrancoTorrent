@@ -48,51 +48,33 @@ public:
 	bool done = false;
 	void PeerCommunication(PeerData &peerData, std::string infoHash)
 	{
+		
+
 		Peer peer(peerData.GetIP(), peerData.GetPort(), infoHash, pieces);
 		bool isConnected = peer.CreateConnection();
 		if (isConnected)
 		{
 
-			//std::thread thread(&Peer::Listen, peer);
-			//peer.RecvPiece(pieces.at(1));
-			if (!done)
+			for (size_t i = 0; i < pieces.size(); i++)
 			{
-				done = true;
-			peer.Listen(pieces.at(0));
-			}
-		
-			int indexCounter = 0;
-			int fromOffset = 0, toOffset = 0, filesCounter = 0;
-			for (std::size_t i = 0; i < numPieces; i++)
-			{
-			//	peer.HasPeace(pieceCounter);
-				//char * pieceData = new char[pieceLength];
-				
-			//	toOffset = (*files.at(filesCounter).dictionary.GetValueByKey("length")).integer;
-				//if (toOffset > pieceLength)
-				//{
-					//peer.RecievePeace2(GetPieceIndex(filesCounter), fromOffset, toOffset, pieceLength);
-				//	peer.bitRequest->RequestPiece(0, 0, toOffset);
-				//}
-				//else {
-				//	peer.RecievePeace2(GetPieceIndex(filesCounter), fromOffset, toOffset, pieceLength);
-			//	}
-				filesCounter++;
-				fromOffset = toOffset;
-
-				if (fromOffset > pieceLength)
+				if (!pieces.at(i).isInDownload())
 				{
-					fromOffset = toOffset % pieceLength;
+					pieces.at(i).setBegin(true);
+					pieces.at(i).setInDownload(true);
+					pieces.at(i).setFinish(peer.Listen(pieces.at(i)));
+					if (!pieces.at(i).isFinished())
+					{						pieces.at(i).setInDownload(false);
+						peer.Disconnect();
+						bool isConnected = peer.CreateConnection();
+						if (isConnected && !pieces.at(i).isFinished())
+							i--;
+						// Download of piece didn't complete, reconnect, and try again!
+					}
+
+
 				}
-				//4056211 + 291); 
-				indexCounter++;
-				//peer.RecievePeace2(pieceCounter, pieceLength, pieceLength);//4056211 + 291); 
-				//pieceCounter++;
-				//peer.HasPeace(0);
-				//peer.RecievePeace(0, 4056211 + 291); 
-
 			}
-
+			
 			//thread.join();
 		}
 	}
@@ -135,9 +117,16 @@ public:
 			int fileSize = (*files.at(i).dictionary.GetValueByKey("length")).integer;
 			std::string str = (*files.at(i).dictionary.GetValueByKey("path")).list.at(0).text;
 
+			bool go = false;
 			if (i > 0)
 			{
-				PieceItem pieceItem(currIndex, currIndex + fileSize / blockSize, pieces.at(i - 1).endOffSet, pieces.at(i - 1).endOffSet + (fileSize % 1048576), fileSize, str, i);
+				int endOffSet = pieces.at(i - 1).endOffSet + (fileSize % 1048576);
+				int endIndex = currIndex + fileSize / blockSize;
+				if (endOffSet >= 1048576)
+				{
+					endOffSet = endOffSet % 1048576; endIndex++; go = true;
+				}
+				PieceItem pieceItem(currIndex, endIndex , pieces.at(i - 1).endOffSet, endOffSet, fileSize, str, i);
 				pieces.push_back(pieceItem);
 			}
 			else {
@@ -146,57 +135,10 @@ public:
 			}
 
 			currIndex += fileSize / blockSize;
+			if (go)
+				currIndex++;
+
 		}
-
-			//for (int a = 0; a < fileSize; a += 16384)
-			//{
-			//	
-			//	
-
-			//	if (i > 0)
-			//	{
-			//		if (changed)
-			//		{
-			//			PieceItem pieceItem(currIndex, -1, 0, offSetEnd, fileSize);
-			//			pieces.push_back(pieceItem);
-			//			changed = false;
-			//		}
-			//		else {
-			//			PieceItem pieceItem(currIndex, -1, pieces.at(i - 1).endOffSet, pieces.at(i - 1).endOffSet + offSetEnd, fileSize);
-			//			pieces.push_back(pieceItem);
-			//		}
-			//		
-			//		//	currIndex++;
-			//		//}
-			//	}
-			//	else {
-			//		PieceItem pieceItem(0, -1, 0, offSetEnd, fileSize);
-			//		pieces.push_back(pieceItem);
-			//		//currIndex++;
-			//	}
-
-			//	if (i > 0)
-			//	{
-			//		if (pieces.at(i - 1).endOffSet >= pieceLength)
-			//		{
-			//			currIndex++;
-			//			changed = true;
-			//		}
-			//	}
-					//currIndex += pieces.at(i - 1).endOffSet + ;
-			
-
-
-
-
-
-
-
-
-			
-
-			
-			
 		
 	}
 

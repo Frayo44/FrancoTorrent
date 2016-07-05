@@ -22,16 +22,21 @@ OrderedMap<std::string, unsigned short> TrackerResponse::DecodePeers(char * buff
 	int chunks = strlen(buf) / 6;
 	int offset = 0;
 	unsigned char *ip;
-	unsigned short port;
+	
 	int recsDone = 0;
 
 	while (recsDone < chunks){
+		
 		ip = (unsigned char *)buf + offset;
-
-		port = (unsigned short)(buf[4] << 8) | buf[5];
-		//port = (unsigned short) buf + offset + 4;
+		//unsigned short number = (unsigned short)strtoul(buf[4] + buff[5], NULL, 0);
+		unsigned char mostSignifcantChar = buf[4];
+		unsigned char lessSignifcantChar = buf[5];
+		unsigned short port = (unsigned short)(mostSignifcantChar << 8);
+		port = port | lessSignifcantChar;
+		//port = (unsigned short) buf + offset + 4; //10118
 		peers.Insert(inet_ntoa(*(in_addr*)ip), (port));
-		printf("\n\n%s - %d\n", inet_ntoa(*(in_addr*)ip), (port));
+		printf("\n\n%s - %d\n", inet_ntoa(*(in_addr*)ip), port);
+		
 		//offset += 6;
 		buf += 6;
 		recsDone++;

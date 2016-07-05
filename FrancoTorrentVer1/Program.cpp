@@ -4,9 +4,14 @@
 #include <vector>
 void main(void)
 {
-
-	HTTPTracker tracker("MyTorrent.torrent");
-
+	try
+	{
+		HTTPTracker tracker("MyTorrent.torrent");
+	}
+	catch (const char* msg)
+	{
+		std::clog << msg << std::endl;
+	}
 	//std::cout << __cplusplus << std::endl;
 
 	getchar();

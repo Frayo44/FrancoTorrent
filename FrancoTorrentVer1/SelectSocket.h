@@ -68,9 +68,27 @@ public:
 		return true;
 	}
 
-
-
 	int Recv(char * buffer, int length)
+	{
+		memcpy(&tv1, &tv, sizeof(tv));
+		
+			
+		/* The socket_fd has data available to be read */
+		int result = recv(socket_fd, buffer, length, 0);
+		if (result == 0) {
+			/* This means the other side closed the socket */
+			closesocket(socket_fd);
+			return -1;
+		}
+		else {
+			return result;
+		}
+		return 1;
+
+	}
+
+
+	int Recvv(char * buffer, int length)
 	{
 		memcpy(&tv1, &tv, sizeof(tv));
 		/* Call select() */
@@ -97,8 +115,8 @@ public:
 		}
 		else if (result < 0) {
 			/* An error ocurred, just print it to stdout */
-			printf("Error on select(): %s\", strerror(errno)");
-			return -1;
+			throw ("Error on select(): %s\", strerror(errno)");
+		//	return -1;
 		} 
 
 		return -1;
@@ -114,15 +132,7 @@ public:
 			int rtn;
 			memcpy(&tv1, &tv, sizeof(tv));
 
-			/* Call select() */
-			do {
-				FD_ZERO(&readset);
-				FD_SET(socket_fd, &readset);
-				result = select(socket_fd + 1, &readset, NULL, NULL, &tv1);
-			} while (result == -1 && errno == 1);
-
-			if (result > 0) {
-				if (FD_ISSET(socket_fd, &readset)) {
+			
 					/* The socket_fd has data available to be read */
 					int result = recv(socket_fd, buffer + recieved, BLOCK_REQUEST_SIZE, 0);
 					if (result == 0) {
@@ -134,13 +144,8 @@ public:
 						recieved += result;
 					}
 					//return 1;
-				}
-			}
-			else if (result < 0) {
-				/* An error ocurred, just print it to stdout */
-				printf("Error on select(): %s\", strerror(errno)");
-				return -1;
-			}
+				
+		
 		} while (recieved < size);
 
 		return -1;
@@ -152,6 +157,14 @@ public:
 			//throw ("Send failed (send())");
 			return false;
 		}
+	}
+
+	int Disconnect()
+	{
+		closesocket(socket_fd);
+		WSACleanup();
+		
+		return 0;
 	}
 		
 };

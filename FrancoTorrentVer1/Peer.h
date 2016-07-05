@@ -13,7 +13,7 @@ private:
 	//BittorrRequest * bitRequest;
 	bool isConnected;
 	std::vector<unsigned char> bitfield;
-	bool finished, firstTime = true;
+	bool finished, firstTime;
 	std::vector<PieceItem> pieces;
 	int currFileIndex, currOffSet;
 	int pieceSize = 0, offset = 0, requestSize = 0, currPieceIndex = 0;
@@ -35,7 +35,7 @@ public:
 		finished = false, firstTime = true;
 	}
 	 
-	Peer(std::string ip, int port, std::string infoHash, std::vector<PieceItem> pieces) :
+	Peer(std::string ip, int port, std::string infoHash, std::vector<PieceItem>& pieces) :
 		ip(ip), port(port), infoHash(infoHash), pieces(pieces)
 	{
 	//	file = new 
@@ -43,9 +43,33 @@ public:
 		bitRequest = new BittorrRequest();
 		currFileIndex = 0;
 		pieceSize = pieces.at(0).fileSize;
+		firstTime = true;
 	}
 
-	
+	void ReConnect()
+	{
+		bitRequest->Disconnect();
+		CreateConnection();
+		firstTime = true;
+	}
+
+	void Disconnect()
+	{
+		char buff[16384];
+		try
+		{
+		//	bitRequest->RecvBySize(buff, 16384);
+		}
+		catch (...)
+		{
+
+		}
+		
+		bitRequest->Disconnect();
+		bitRequest = new BittorrRequest();
+		isConnected = false;
+		firstTime = true;
+	}
 
 	bool IsConnected()
 	{
@@ -81,67 +105,77 @@ public:
 
 	void RecvPiece(PieceItem & piece)
 	{
-		firstTimee();
-		bitRequest->RequestPiece(piece.startIndex, piece.beginOffSet, 16384);
-		currPieceIndex = piece.startIndex;
-		pieceSize = piece.fileSize;
-		std::size_t dataRecieved = 0;
-		while (dataRecieved < piece.fileSize)
+		try
 		{
-
-			int i = piece.startIndex;
-			char buffer[5];
-			int recievedLength = bitRequest->Recv(buffer, 5, 5);
-			char buffer2[1500];
-			int ss = 0;
-			if (recievedLength > 0)
+			firstTimee();
+			bitRequest->RequestPiece(piece.startIndex, piece.beginOffSet, 16384);
+			currPieceIndex = piece.startIndex;
+			pieceSize = piece.fileSize;
+			std::size_t dataRecieved = 0;
+			while (dataRecieved < piece.fileSize)
 			{
-				//recievedLength = 
-				switch (buffer[4])
-				{
-				case '\x1':
-					// Unchoke
-					//bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
-					break;
-				case '\x5':
-					if (buffer[0] == '\x0')
-						bitRequest->Recv(buffer2, buffToInteger(buffer) - 1, 5);
-					else
-						bitRequest->Recv(buffer2, 4, 5);
-					break;
-				case '\x7':
-					// Piece
-					ss = buffToInteger(buffer) - 1;
-					dataRecieved += GetPiece(ss);
-					//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
-					break;
-				case '\x14':
-					// Piece
-					ss = buffToInteger(buffer) - 1;
-					bitRequest->Recv(buffer2, ss, 5);
-					//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
-					break;
-				default:
-					//int size = bitRequest->Recv(buffer2, 4, 5);
-					break;
-				}
 
+				int i = piece.startIndex;
+				char buffer[5];
+				int recievedLength = bitRequest->Recv(buffer, 5, 5);
+				char buffer2[1500];
+				int ss = 0;
+				if (recievedLength > 0)
+				{
+					//recievedLength = 
+					switch (buffer[4])
+					{
+					case '\x1':
+						// Unchoke
+						//bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+						break;
+					case '\x5':
+						if (buffer[0] == '\x0')
+							bitRequest->Recv(buffer2, buffToInteger(buffer) - 1, 5);
+						else
+							bitRequest->Recv(buffer2, 4, 5);
+						break;
+					case '\x7':
+						// Piece
+						ss = buffToInteger(buffer) - 1;
+						dataRecieved += GetPiece(ss);
+						//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+						break;
+					case '\x14':
+						// Piece
+						ss = buffToInteger(buffer) - 1;
+						bitRequest->Recv(buffer2, ss, 5);
+						//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+						break;
+					default:
+						//int size = bitRequest->Recv(buffer2, 4, 5);
+						break;
+					}
+
+				}
 			}
 		}
-
-
+		catch (unsigned char * msg)
+		{
+			std::cout << msg << std::endl;
+			ReConnect();
+		//	bitRequest->RequestPiece(currPieceIndex, offset, requestSize);
+		}
+		
 	}
 
 	void firstTimee()
 	{
 		if (firstTime)
 		{
-			char * buffer = new char[68];
+			char * buffer = new char[58];
 			// Handshake (Extended)
-			int recieved = bitRequest->Recv(buffer, 68, 68);
+			//int recieved = bitRequest->Recv(buffer, 68, 68);
+			int recieved = bitRequest->Recv(buffer, 58, 58);
 
 			if (recieved > 0 && buffer[0] == '\x13')
-			{
+			{ 
+				int i = 0;
 				// Handshake recieved
 			}
 
@@ -150,129 +184,223 @@ public:
 
 	}
 
-	void Listen(PieceItem & piece)
+	void decide()
 	{
-		pieceSize = piece.fileSize;
-		offset = piece.beginOffSet;
-		currPieceIndex = piece.startIndex;
-		currFileIndex = piece.fileIndex;
-		while (!finished)
+		char buffer[5];
+		int recievedLength = bitRequest->Recv(buffer, 5, 5);
+		char buffer2[1500];
+		int ss = 0;
+		int dataRecieved = 0;
+		if (recievedLength > 0)
 		{
-			if (firstTime)
+			//recievedLength = 
+			switch (buffer[4])
 			{
-				firstTimee();
+			case '\x1':
+				// Unchoke
+				//bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+				break;
+			case '\x5':
+				if (buffer[0] == '\x0')
+					bitRequest->Recv(buffer2, buffToInteger(buffer) - 1, 5);
+				else
+					bitRequest->Recv(buffer2, 4, 5);
+				break;
+			case '\x7':
+				// Piece
+				ss = buffToInteger(buffer) - 1;
+				dataRecieved += GetPiece(ss);
+				//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+				break;
+			case '\x14':
+				// Handshake extended recieved
+				ss = buffToInteger(buffer) - 1;
+				bitRequest->Recv(buffer2, ss, 5);
+				//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+				break;
+			default:
+				//int size = bitRequest->Recv(buffer2, 4, 5);
+				break;
+			}
+		}
+	}
 
-				
 
-				if (pieceSize > 16384)
-					bitRequest->RequestPiece(piece.startIndex, offset, 16384);
-				else {
+	bool Listen(PieceItem & piece)
+	{
+		try
+		{
+			pieceSize = piece.lastFileSize;
+			offset = piece.lastOffset;
+			currPieceIndex = piece.lastIndex;
+			currFileIndex = piece.fileIndex;
+			int dataRecieved = 0;
+			finished = false;
+			bool from = true;
+			if (!firstTime)
+			if (pieceSize > 16384)
+				bitRequest->RequestPiece(piece.lastIndex, offset, 16384);
+			else {
 
-					bitRequest->RequestPiece(0, 0, pieceSize);
-				}
-				continue;
+				bitRequest->RequestPiece(piece.lastIndex, offset, pieceSize);
 			}
 
-	
-			char buffer[5];
-			int recievedLength = bitRequest->Recv(buffer, 5, 5);
-			char buffer2[1500];
-			int ss = 0;
-			if (recievedLength > 0)
+
+			while (dataRecieved < piece.fileSize && !finished)
 			{
-				//recievedLength = 
-				switch (buffer[4])
+				if (firstTime)
 				{
-				case '\x1':
-					// Unchoke
-					//bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
-					break;
-				case '\x5':
-					if (buffer[0] == '\x0')
-						bitRequest->Recv(buffer2, buffToInteger(buffer) - 1, 5);
-					else
-						bitRequest->Recv(buffer2, 4, 5);
-					break;
-				case '\x7':
-					// Piece
-					ss = buffToInteger(buffer) - 1;
-					GetPiece(ss);
-					//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
-					break;
-				case '\x14':
-					// Piece
-					ss = buffToInteger(buffer) - 1;
-					bitRequest->Recv(buffer2, ss, 5);
-					//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
-					break;
-				default:
-					//int size = bitRequest->Recv(buffer2, 4, 5);
-					break;
+					firstTimee();
+					decide();
+					if (pieceSize > 16384)
+						bitRequest->RequestPiece(piece.startIndex, offset, 16384);
+					else {
+
+						bitRequest->RequestPiece(0, 0, pieceSize);
+					}
+					continue;
 				}
+
+
+				char buffer[5];
+				int recievedLength = bitRequest->Recv(buffer, 5, 5);
+				char buffer2[1500];
+				int ss = 0;
+
+				if (recievedLength > 0)
+				{
+					//recievedLength = 
+					switch (buffer[4])
+					{
+					case '\x1':
+						// Unchoke
+						//bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+						break;
+					case '\x5':
+						if (buffer[0] == '\x0')
+							bitRequest->Recv(buffer2, buffToInteger(buffer) - 1, 5);
+						else
+							bitRequest->Recv(buffer2, 4, 5);
+						break;
+					case '\x7':
+						// Piece
+						ss = buffToInteger(buffer) - 1;
+						if (ss > 1000000 || ss <= 0)
+						{
+							finished = true;
+							from = false;
+						}
+							//bitRequest->Recv(buffer2, 1500, 1500);
+						else
+							dataRecieved += GetPiece(ss);
+						//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+						break;
+					case '\x14':
+						// Piece
+						ss = buffToInteger(buffer) - 1;
+						bitRequest->Recv(buffer2, ss, 5);
+						//	bitRequest->Recv(buffer2, buffToInteger(buffer) - 5, 5);
+						break;
+					default:
+						//int size = bitRequest->Recv(buffer2, 4, 5);
+						break;
+					}
+				}
+
 			}
 
+			if (dataRecieved >= piece.fileSize || (finished && from))
+				return true;
+		}
+		catch (unsigned char * msg)
+		{
+			std::cout << msg << std::endl;
+			ReConnect();
 		}
 
-			
+		return false;
 	} 
 
 	int GetPiece(int size)
 	{
-	    newBuffer = new char[size];
-		bitRequest->RecvBySize(newBuffer, size);
-
-
-
-		//newBuffer += 8;
-		File file("./Music/" + pieces.at(currFileIndex).fileName);
-		file.WriteToFile(newBuffer + 8, size - 8);
-		file.Close();
-
-
-
-		pieceSize -= (size - 8);
-		std::cout << "Downloading File Index: " << currFileIndex << " More: " << pieceSize << std::endl;
-
-		if (pieceSize <= 0)
+		try
 		{
-			currFileIndex++;
-			pieceSize = pieces.at(currFileIndex).fileSize;
+			newBuffer = new char[size];
 		}
-
-		offset += size - 8;
-
-		if (pieceSize > 16384)
+		catch (...)
 		{
-			if (1048576 - offset < 16384)
+			newBuffer = new char[size];
+		}
+			try
 			{
-				requestSize = 1048576 - offset;
-				if (requestSize == 0)
+				bitRequest->RecvBySize(newBuffer, size);
+				//newBuffer += 8;
+				File file("./Music/" + pieces.at(currFileIndex).fileName);
+				file.WriteToFile(newBuffer + 8, size - 8);
+				file.Close();
+
+				delete[] newBuffer;
+			}
+			catch (...)
+			{
+				std::cout << "EErrr" << std::endl;
+				//ReConnect();
+				//bitRequest->RequestPiece(currPieceIndex, offset, requestSize);
+			}
+
+			
+
+
+			pieceSize -= (size - 8);
+			std::cout << "Downloading File Index: " << currFileIndex << " More: " << pieceSize << std::endl;
+
+			if (pieceSize <= 0)
+			{
+				finished = true;
+				pieces.at(currFileIndex).setFinish(true);
+				return 0;
+				//currFileIndex++;
+				//pieceSize = pieces.at(currFileIndex).fileSize;
+			}
+
+			pieces.at(currFileIndex).lastIndex = currPieceIndex;
+			pieces.at(currFileIndex).lastOffset = offset;
+			pieces.at(currFileIndex).lastFileSize = pieceSize;
+			offset += size - 8;
+
+			if (pieceSize > 16384)
+			{
+				if (1048576 - offset < 16384)
 				{
-					bitRequest->HavePiece(currPieceIndex);
-					offset = 0;
-					currPieceIndex++;
-					if (pieceSize > 16384)
+					requestSize = 1048576 - offset;
+					if (requestSize == 0)
 					{
-						requestSize = 16384;
-					}
-					else {
-						requestSize = pieceSize;
+						bitRequest->HavePiece(currPieceIndex);
+						offset = 0;
+						currPieceIndex++;
+						if (pieceSize > 16384)
+						{
+							requestSize = 16384;
+						}
+						else {
+							requestSize = pieceSize;
+						}
 					}
 				}
+				else {
+					requestSize = 16384;
+				}
+
 			}
 			else {
-				requestSize = 16384;
+				requestSize = pieceSize;
 			}
-			
-		}
-		else {
-			requestSize = pieceSize;
-		}
 
+
+
+			bitRequest->RequestPiece(currPieceIndex, offset, requestSize);
+			return size - 8;
 		
-
-		bitRequest->RequestPiece(currPieceIndex, offset, requestSize);
-		return size - 8;
 	}
 
 	int buffToInteger(char * buffer)
