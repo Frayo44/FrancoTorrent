@@ -13,7 +13,7 @@ private:
 	bool isConnected;
 	std::vector<unsigned char> bitfield;
 	bool finished, firstTime;
-	std::vector<PieceItem> pieces;
+	std::vector<PieceItem> &pieces;
 	int currFileIndex, currOffSet;
 	int pieceSize = 0, offset = 0, requestSize = 0, currPieceIndex = 0;
 	char * newBuffer;
@@ -135,7 +135,7 @@ public:
 		}
 	}
 
-	bool Listen(PieceItem piece)
+	int Listen(PieceItem piece)
 	{
 
 		pieceSize = piece.lastFileSize;
@@ -172,6 +172,13 @@ public:
 
 				char buffer[5];
 				int recievedLength = bitRequest->Recv(buffer, 5, 5);
+				if (recievedLength < 0)
+				{
+					pieces.at(currFileIndex).setBegin(false);
+					pieces.at(currFileIndex).setInDownload(false);
+					isConnected = false;
+					return -1;
+				}
 				char buffer2[1500];
 				int ss = 0;
 
@@ -218,9 +225,9 @@ public:
 			}
 
 			if (dataRecieved >= piece.fileSize || (finished && from))
-				return true;
+				return 1;
 
-			return false;
+			return 0;
 	}
 
 	int GetPiece(int size)

@@ -18,11 +18,12 @@ private:
 	bool begin;
 	bool finishedDownload;
 	bool inDownload;
+	bool onTransfer;
 
 public:
 	PieceItem(int startIndex, int endIndex, int beginOffSet, int endOffSet, int fileSize, std::string fileName, int fileIndex)
 		: startIndex(startIndex), endIndex(endIndex), beginOffSet(beginOffSet), endOffSet(endOffSet), fileSize(fileSize), fileName(fileName), fileIndex(fileIndex),
-		begin(false), finishedDownload(false), lastIndex(startIndex), lastOffset(beginOffSet), lastFileSize(fileSize), inDownload(false)
+		begin(false), finishedDownload(false), onTransfer(false), lastIndex(startIndex), lastOffset(beginOffSet), lastFileSize(fileSize), inDownload(false)
 	{
 	
 	};
@@ -55,6 +56,16 @@ public:
 	void setInDownload(bool inDownload)
 	{
 		this->inDownload = inDownload;
+	}
+
+	bool isOnTransfer()
+	{
+		return onTransfer;
+	}
+
+	void setOnTransfer(bool onTransfer)
+	{
+		this->onTransfer = onTransfer;
 	}
 
 	
