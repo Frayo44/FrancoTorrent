@@ -4,7 +4,7 @@
 #include "HTTPRequest.h"
 #include "TrackerResponse.h"
 #include "File.h"
-#include "sha1.h"
+#include "Sha1.h"
 #include "Bencoding.h"
 #include <string>
 #include "Socket.h"

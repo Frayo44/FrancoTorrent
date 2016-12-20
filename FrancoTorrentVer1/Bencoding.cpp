@@ -1,5 +1,6 @@
 #include "Bencoding.h"
 #include "sha1.h"
+
 Bencoding::Bencoding() { }
 
 // Decoding
@@ -24,70 +25,12 @@ Value Bencoding::Decode(const TByte *encoded, int length)
 		isSuccess = false;
 	}
 
-	//Value v = * this->tree.dictionary.getValueByIndex(0);
-	//std::string  s = this->tree.dictionary.getKeyByIndex(4);
 	std::cout << "Success?: " << isSuccess << std::endl;
-
-	/**unsigned char hash[20];
-	char hexstring[41];
-
-	sha1::sha11 sha1;
-
-	sha1.calc("1 1", 3, hash); // 10 is the length of the string
-	sha1.toHexString(hash, hexstring);
-
-	int i = 7; **/
 
 	return tree;
 
 
 }
-/*
-Value Bencoding::SearchForValueByKey(std::string key)
-{
-
-	return Search(key, tree);
-}
-
-Value Bencoding::Search(std::string key, Value obj)
-{
-	switch (obj.dataType)
-	{
-	case LIST:
-		return SearchInList(key, obj.list.at(i));
-		break;
-	case DICTIONARY:
-
-		if (obj.dictionary.GetKeyByIndex(i) == key)
-		{
-			return * obj.dictionary.GetValueByIndex(i);
-		}
-
-		return Search(key, *obj.dictionary.GetValueByIndex(i));
-		
-		break;
-	default:
-		//return Search(key, NULL);
-		break;
-	}
-}
-
-Value Bencoding::SearchInList(std::string key, Value obj)
-{
-	Search(key, obj);
-	obj.list.erase(obj.list.begin() + 1);
-	return SearchInList(key, obj.list.at(0));
-}
-
-Value Bencoding::SearchInDict(std::string key, Value obj)
-{
-
-	if (obj.dictionary.GetKeyByIndex(0) == key)
-		return *obj.dictionary.GetValueByIndex(0);
-	
-
-}*/
-
 
 Value Bencoding::FillTree(std::vector<TToken>& tokens)
 {
@@ -117,7 +60,6 @@ Value Bencoding::decodeInt(std::vector<TToken>& tokens)
 		throw "Unexpected format";
 	if (tokens[2][0] != 'e')
 		throw "Unexpected format";
-
 
 	auto number = std::string(tokens[1].begin(), tokens[1].end());
 	
@@ -157,8 +99,6 @@ Value Bencoding::decodeList(std::vector<TToken>& tokens)
 {
 	std::vector<Value> list;
 
-	
-
 	tokens.erase(tokens.begin()); // remove "l" (or "d" when it has been called from decodeDict)
 
 	if (tokens.size() <= 0)
@@ -193,7 +133,6 @@ Value Bencoding::decodeDict(std::vector<TToken>& tokens)
 		*v1 = (Value) *(i + 1);
 
 		dict.Insert((*i).text, v1);
-     	//dict[(*i).text] = *(i + 1);
 	}
 
 	return Value(dict);

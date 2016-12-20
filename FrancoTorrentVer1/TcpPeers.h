@@ -151,14 +151,9 @@ public:
 
 	TcpPeers(OrderedMap<std::string, unsigned short> peers, std::string infoHash, Bencoding bencoder)
 	{
-
-	
-		//Value v = bencoder.SearchForValueByKey("files");
 		std::vector<Value> files = (*(*bencoder.tree.dictionary.GetValueByKey("info")).dictionary.GetValueByKey("files")).list;
 		this->files = files;
 	
-		
-
 		for (std::size_t i = 0; i < files.size(); i++)
 		{
 			totalSumPieces += (*files.at(i).dictionary.GetValueByKey("length")).integer;

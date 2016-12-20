@@ -76,13 +76,12 @@
     <ClInclude Include="OrderedMap.h" />
     <ClInclude Include="PeerData.h" />
     <ClInclude Include="SelectSocket.h" />
-    <ClInclude Include="sha1.h" />
+    <ClInclude Include="Sha1.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="TcpPeers.h" />
     <ClInclude Include="TrackerResponse.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\sha1.cpp" />
     <ClCompile Include="Bencoding.cpp" />
     <ClCompile Include="BitArray.h" />
     <ClCompile Include="BittorrRequest.cpp" />
@@ -91,6 +90,7 @@
     <ClCompile Include="HTTPTracker.cpp" />
     <ClCompile Include="Peer.h" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="sha1.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="Tcp.h" />
     <ClCompile Include="TrackerResponse.cpp" />

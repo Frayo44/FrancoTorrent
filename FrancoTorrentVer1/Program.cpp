@@ -1,4 +1,3 @@
-
 #include "HTTPTracker.h"
 #include "BitArray.h"
 #include <vector>
@@ -12,7 +11,6 @@ void main(void)
 	{
 		std::clog << msg << std::endl;
 	}
-	//std::cout << __cplusplus << std::endl;
 
 	getchar();
 }

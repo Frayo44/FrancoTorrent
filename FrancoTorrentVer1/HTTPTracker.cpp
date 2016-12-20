@@ -99,11 +99,9 @@ std::string HTTPTracker::GetSha1(Bencoding &bencoder)
 	unsigned char hash[20];
 	char hexstring[41];
 
-	sha1::sha11 sha1;
-
 	std::string str(encoded.begin(), encoded.end());
 
-	sha1.calc((const char *)str.c_str(), encoded.size(), hash); // 10 is the length of the string
+	sha1::calc((const char *)str.c_str(), encoded.size(), hash); // 10 is the length of the string
 
 	std::string hashedString(hash, hash + sizeof(hash));
 	//std::string str1 = urlencode(hashedString);
